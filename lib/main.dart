@@ -111,29 +111,196 @@ class TribunalItem {
 
 class LegalDatabase {
   static final List<MateriaSubmateria> materias = [
-    // a. DERECHO PÚBLICO
-    MateriaSubmateria(id: 'pub_const', granGrupo: 'a. Derecho Público', rama: 'Derecho Constitucional', submateria: 'Acciones Constitucionales y Recursos (Corte de Apelaciones y Corte Suprema)', normativa: 'Constitución Política de la República (Arts. 20, 21) y Autos Acordados CS'),
-    MateriaSubmateria(id: 'pub_tc', granGrupo: 'a. Derecho Público', rama: 'Justicia Constitucional', submateria: 'Tribunal Constitucional (Inaplicabilidad, Inconstitucionalidad y Controles)', normativa: 'Constitución (Art. 93) y Ley N° 17.997 (LOC del TC)'),
-    MateriaSubmateria(id: 'pub_admin', granGrupo: 'a. Derecho Público', rama: 'Derecho Administrativo', submateria: 'Procedimiento, Reclamos y Contraloría', normativa: 'Ley N° 19.880 y Ley N° 10.336 (Orgánica CGR)'),
-    MateriaSubmateria(id: 'pub_penal', granGrupo: 'a. Derecho Público', rama: 'Derecho Procesal Penal', submateria: 'Investigación, Garantía, Juicio Oral y Recursos', normativa: 'Código Procesal Penal (CPP) y Código Penal'),
-    MateriaSubmateria(id: 'pub_trib', granGrupo: 'a. Derecho Público', rama: 'Derecho Tributario y Aduanero', submateria: 'Reclamaciones TTA, SII, TGR y Aduanas', normativa: 'Código Tributario (DL 830), Ordenanza de Aduanas, Ley Orgánica TTA'),
+    // a. DERECHO LABORAL Y PREVISIONAL
+    MateriaSubmateria(
+      id: 'mix_lab_despido',
+      granGrupo: 'a. Derecho Laboral y Previsional',
+      rama: 'Despido e Indemnizaciones (Código del Trabajo)',
+      submateria: 'Despido Injustificado, Indebido, Improcedente y Ley Bustos (Nulidad del Despido por Cotizaciones)',
+      normativa: 'Arts. 162, 168 y 446 del Código del Trabajo (CT)',
+    ),
+    MateriaSubmateria(
+      id: 'mix_lab_tutela',
+      granGrupo: 'a. Derecho Laboral y Previsional',
+      rama: 'Tutela Laboral y Derechos Fundamentales',
+      submateria: 'Vulneración de Derechos Fundamentales durante la Relación Laboral o con Ocasión del Despido',
+      normativa: 'Arts. 485 a 495 del Código del Trabajo (CT)',
+    ),
+    MateriaSubmateria(
+      id: 'mix_lab_monitorio_ejec',
+      granGrupo: 'a. Derecho Laboral y Previsional',
+      rama: 'Procedimiento Monitorio y Cobranza Laboral',
+      submateria: 'Reclamos hasta 10 UTM, Cobro de Finiquitos, Títulos Ejecutivos y Multas Dirección del Trabajo',
+      normativa: 'Arts. 463, 496 y 503 del Código del Trabajo y Ley N° 20.022',
+    ),
 
-    // b. DERECHO PRIVADO
-    MateriaSubmateria(id: 'priv_civ_ord', granGrupo: 'b. Derecho Privado', rama: 'Derecho Procesal Civil', submateria: 'Juicio Ordinario, Incidentes y Medidas Precautorias', normativa: 'Código de Procedimiento Civil (CPC)'),
-    MateriaSubmateria(id: 'priv_civ_ejec', granGrupo: 'b. Derecho Privado', rama: 'Derecho Procesal Civil', submateria: 'Juicio Ejecutivo y Apremios', normativa: 'Código de Procedimiento Civil (CPC) y Ley N° 21.394'),
-    MateriaSubmateria(id: 'priv_civ_esp', granGrupo: 'b. Derecho Privado', rama: 'Derecho Procesal Civil', submateria: 'Juicios Sumarios, Arbitrales y Juicios de Hacienda', normativa: 'Código de Procedimiento Civil (CPC)'),
-    MateriaSubmateria(id: 'priv_com_conc', granGrupo: 'b. Derecho Privado', rama: 'Derecho Comercial y Concursal', submateria: 'Procedimientos Concursales de Reorganización y Liquidación', normativa: 'Ley N° 20.720 y Código de Comercio'),
+    // b. DERECHO PROCESAL CIVIL Y ARRENDAMIENTO
+    MateriaSubmateria(
+      id: 'priv_civ_ord',
+      granGrupo: 'b. Derecho Procesal Civil',
+      rama: 'Juicio Ordinario y Sumario Civil',
+      submateria: 'Demanda, Contestación, Excepciones, Réplica, Dúplica y Recursos Civiles',
+      normativa: 'Código de Procedimiento Civil (CPC) - Arts. 253 y ss.',
+    ),
+    MateriaSubmateria(
+      id: 'priv_civ_ejec',
+      granGrupo: 'b. Derecho Procesal Civil',
+      rama: 'Juicio Ejecutivo y Embargos',
+      submateria: 'Mandamiento de Ejecución, Oposición de Excepciones y Réplica Ejecutiva',
+      normativa: 'Código de Procedimiento Civil (CPC) - Arts. 434 a 529',
+    ),
+    MateriaSubmateria(
+      id: 'priv_civ_arriendo',
+      granGrupo: 'b. Derecho Procesal Civil',
+      rama: 'Arrendamiento de Predios Urbanos y Precario',
+      submateria: 'Ley Devuélveme Mi Casa (Ley N° 21.461 y N° 18.101), Cobro de Rentas y Precario',
+      normativa: 'Ley N° 18.101, Ley N° 21.461 y Art. 2195 Código Civil',
+    ),
 
-    // c. RAMAS MIXTAS, ESPECIALES Y TRANSVERSALES
-    MateriaSubmateria(id: 'mix_lab', granGrupo: 'c. Ramas Mixtas', rama: 'Derecho del Trabajo y Seguridad Social', submateria: 'Juicio Ordinario Laboral, Tutela y Monitorio', normativa: 'Código del Trabajo (CT) y Leyes Especiales'),
-    MateriaSubmateria(id: 'mix_fam', granGrupo: 'c. Ramas Mixtas', rama: 'Derecho de Familia', submateria: 'Alimentos, Divorcio, Violencia Intrafamiliar y Cuidado Personal', normativa: 'Ley N° 19.968 (Tribunales de Familia) y CC'),
-    MateriaSubmateria(id: 'mix_pol_loc', granGrupo: 'c. Ramas Mixtas', rama: 'Policía Local y Tránsito', submateria: 'Infracciones de Tránsito, Ley de Copropiedad y Ordenanzas', normativa: 'Ley N° 18.287 (JPL) y Ley N° 21.442'),
-    MateriaSubmateria(id: 'mix_inapi', granGrupo: 'c. Ramas Mixtas', rama: 'Propiedad Industrial e Intelectual', submateria: 'Marcas, Patentes y Oposiciones ante INAPI y TDPI', normativa: 'Ley N° 19.039 y Ley N° 17.336'),
+    // c. DERECHO DE FAMILIA
+    MateriaSubmateria(
+      id: 'mix_fam_alimentos',
+      granGrupo: 'c. Derecho de Familia',
+      rama: 'Pensión de Alimentos y Cumplimiento',
+      submateria: 'Fijación, Aumento, Rebaja, Cese de Alimentos y Registro de Deudores',
+      normativa: 'Ley N° 14.908, Ley N° 21.389 y Ley N° 19.968',
+    ),
+    MateriaSubmateria(
+      id: 'mix_fam_cuidado_divorcio',
+      granGrupo: 'c. Derecho de Familia',
+      rama: 'Cuidado Personal, Visitas, Divorcio y Compensación',
+      submateria: 'Tuición, Relación Directa y Regular, Divorcio Unilateral/Mutuo Acuerdo y Compensación Económica',
+      normativa: 'Ley N° 19.947 (Matrimonio Civil) y Código Civil',
+    ),
+    MateriaSubmateria(
+      id: 'mix_fam_vif_proteccion',
+      granGrupo: 'c. Derecho de Familia',
+      rama: 'Violencia Intrafamiliar, Protección NNA y Filiación',
+      submateria: 'Medidas Cautelares VIF, Medidas de Protección NNA y Juicios de Paternidad/Filiación',
+      normativa: 'Ley N° 20.066, Ley N° 19.968 y Arts. 179 y ss. CC',
+    ),
+
+    // d. DERECHO PROCESAL PENAL
+    MateriaSubmateria(
+      id: 'pub_penal',
+      granGrupo: 'd. Derecho Procesal Penal',
+      rama: 'Procedimiento Penal y Recursos',
+      submateria: 'Juicio Oral, Garantía, Procedimiento Simplificado, Abreviado, Amparo y Nulidad Penal',
+      normativa: 'Código Procesal Penal (CPP) - Arts. 95, 366, 372',
+    ),
+
+    // e. DERECHO TRIBUTARIO Y ADUANERO
+    MateriaSubmateria(
+      id: 'pub_trib',
+      granGrupo: 'e. Derecho Tributario y Aduanero',
+      rama: 'Reclamaciones TTA y SII',
+      submateria: 'Reclamación Tributaria contra Liquidaciones o Giros (SII/TTA) y Reposición RAF/RAV',
+      normativa: 'Código Tributario (DL N° 830) y Ordenanza de Aduanas',
+    ),
+
+    // f. JUZGADOS DE POLICÍA LOCAL
+    MateriaSubmateria(
+      id: 'mix_pol_loc',
+      granGrupo: 'f. Juzgados de Policía Local',
+      rama: 'Tránsito, Consumidor y Copropiedad Inmobiliaria',
+      submateria: 'Infracciones y Accidentes de Tránsito, Ley del Consumidor (LPDC) y Ley de Copropiedad',
+      normativa: 'Ley N° 18.287 (JPL), Ley N° 18.290, Ley N° 19.496 y Ley N° 21.442',
+    ),
+
+    // g. DERECHO CONSTITUCIONAL Y ADMINISTRATIVO
+    MateriaSubmateria(
+      id: 'pub_const',
+      granGrupo: 'g. Derecho Constitucional y Administrativo',
+      rama: 'Acciones Constitucionales y Procedimiento Administrativo',
+      submateria: 'Recurso de Protección, Amparo, Reclamo de Ilegalidad y Recursos Ley 19.880',
+      normativa: 'Constitución Política (Arts. 20, 21), Ley N° 19.880 y Ley N° 18.695',
+    ),
+    MateriaSubmateria(
+      id: 'pub_tc',
+      granGrupo: 'g. Derecho Constitucional y Administrativo',
+      rama: 'Justicia Constitucional (TC)',
+      submateria: 'Inaplicabilidad e Inconstitucionalidad de Leyes ante el Tribunal Constitucional',
+      normativa: 'Constitución (Art. 93) y Ley N° 17.997 (LOC TC)',
+    ),
   ];
 
   static final List<ActuacionProcesal> actuaciones = [
     // ==========================================
-    // 1. DERECHO PROCESAL CIVIL (ORDINARIO Y RECURSOS)
+    // 1. DERECHO LABORAL Y PREVISIONAL
+    // ==========================================
+    ActuacionProcesal(
+      id: 'lab_despido_injustificado', materiaId: 'mix_lab_despido',
+      nombreActuacion: 'Demanda por Despido Injustificado / Indebido (Art. 168 CT)', rolProcesal: 'Trabajador Demandante',
+      tipoInstitucion: 'Juicio Ordinario Laboral', articuloYNorma: 'Art. 168 y 446 Código del Trabajo',
+      diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['60 días hábiles laborales desde la separación del trabajador', 'Suspensión del plazo por reclamo administrativo ante la Inspección del Trabajo (hasta un máximo de 90 días hábiles)']
+    ),
+    ActuacionProcesal(
+      id: 'lab_ley_bustos', materiaId: 'mix_lab_despido',
+      nombreActuacion: 'Acción de Nulidad del Despido / Ley Bustos por Cotizaciones Impagas', rolProcesal: 'Trabajador Demandante',
+      tipoInstitucion: 'Nulidad del Despido (Art. 162 CT)', articuloYNorma: 'Art. 162 inc. 5° a 7° Código del Trabajo',
+      diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Sanción de pago de remuneraciones y cotizaciones desde el despido hasta la convalidación en tribunal', 'Acreditar morosidad o no pago de AFP/Isapre/Fonasa/AFC']
+    ),
+    ActuacionProcesal(
+      id: 'lab_tutela_despido', materiaId: 'mix_lab_tutela',
+      nombreActuacion: 'Tutela Laboral por Vulneración de Derechos con Ocasión del Despido', rolProcesal: 'Trabajador Demandante',
+      tipoInstitucion: 'Procedimiento de Tutela Laboral', articuloYNorma: 'Art. 485 y 489 Código del Trabajo',
+      diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['60 días hábiles laborales desde el despido vulneratorio', 'Opcionalidad de indemnización adicional de 6 a 11 meses de remuneración']
+    ),
+    ActuacionProcesal(
+      id: 'lab_tutela_vigente', materiaId: 'mix_lab_tutela',
+      nombreActuacion: 'Tutela Laboral Durante la Relación Laboral Vigente', rolProcesal: 'Trabajador Demandante',
+      tipoInstitucion: 'Procedimiento de Tutela Laboral', articuloYNorma: 'Art. 485 y 486 Código del Trabajo',
+      diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['60 días hábiles laborales desde la vulneración del derecho fundamental en la empresa']
+    ),
+    ActuacionProcesal(
+      id: 'lab_monitorio', materiaId: 'mix_lab_monitorio_ejec',
+      nombreActuacion: 'Demanda Monitoria Laboral (Cuantía ≤ 10 UTM)', rolProcesal: 'Trabajador Demandante',
+      tipoInstitucion: 'Procedimiento Monitorio Laboral', articuloYNorma: 'Art. 496 y ss. Código del Trabajo',
+      diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Exige reclamo administrativo previo ante la Inspección del Trabajo', 'Resolución inmediata o citación a audiencia única']
+    ),
+    ActuacionProcesal(
+      id: 'lab_contestacion_ord', materiaId: 'mix_lab_despido',
+      nombreActuacion: 'Contestación de Demanda Laboral en Juicio Ordinario', rolProcesal: 'Demandado (Empleador)',
+      tipoInstitucion: 'Defensa Laboral de Fondo', articuloYNorma: 'Art. 452 y 453 Código del Trabajo',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Presentación escrita hasta 5 días antes de la fecha fijada para la audiencia preparatoria']
+    ),
+    ActuacionProcesal(
+      id: 'lab_ejecutivo_opose', materiaId: 'mix_lab_monitorio_ejec',
+      nombreActuacion: 'Oposición de Excepciones en Cobranza Laboral / Previsional', rolProcesal: 'Ejecutado (Empleador)',
+      tipoInstitucion: 'Defensa Ejecutiva Laboral', articuloYNorma: 'Art. 463 y 464 Código del Trabajo',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Excepciones específicas en materia de cobranza laboral dentro de 5 días desde el requerimiento']
+    ),
+    ActuacionProcesal(
+      id: 'lab_reclamo_multa_dt', materiaId: 'mix_lab_monitorio_ejec',
+      nombreActuacion: 'Reclamación Judicial contra Multas de la Dirección del Trabajo', rolProcesal: 'Empresa / Empleador',
+      tipoInstitucion: 'Contencioso Administrativo Laboral', articuloYNorma: 'Art. 503 Código del Trabajo',
+      diasBase: 15, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['15 días hábiles desde la notificación de la resolución o multa administrativa de la DT']
+    ),
+    ActuacionProcesal(
+      id: 'lab_recurso_nulidad', materiaId: 'mix_lab_despido',
+      nombreActuacion: 'Recurso de Nulidad Laboral (Corte de Apelaciones)', rolProcesal: 'Parte Agraviada',
+      tipoInstitucion: 'Recurso Laboral de Alzada', articuloYNorma: 'Art. 477 y 478 Código del Trabajo',
+      diasBase: 10, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['10 días hábiles laborales desde la notificación de la sentencia definitiva laboral']
+    ),
+    ActuacionProcesal(
+      id: 'lab_recurso_unificacion', materiaId: 'mix_lab_despido',
+      nombreActuacion: 'Recurso de Unificación de Jurisprudencia (Corte Suprema)', rolProcesal: 'Parte Agraviada',
+      tipoInstitucion: 'Recurso Laboral ante Corte Suprema', articuloYNorma: 'Art. 483 Código del Trabajo',
+      diasBase: 15, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['15 días hábiles laborales desde el fallo de nulidad que contenga interpretaciones contradictorias']
+    ),
+
+    // ==========================================
+    // 2. DERECHO PROCESAL CIVIL Y ARRENDAMIENTO
     // ==========================================
     ActuacionProcesal(
       id: 'civ_dilatorias', materiaId: 'priv_civ_ord',
@@ -144,88 +311,28 @@ class LegalDatabase {
     ),
     ActuacionProcesal(
       id: 'civ_contesta', materiaId: 'priv_civ_ord',
-      nombreActuacion: 'Contestación de la Demanda Ordinaria', rolProcesal: 'Demandado',
+      nombreActuacion: 'Contestación de la Demanda Ordinaria Civil', rolProcesal: 'Demandado',
       tipoInstitucion: 'Defensa de Fondo / Reconvención', articuloYNorma: 'Art. 258 CPC',
       diasBase: 18, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: true,
       elementosAConsiderar: ['Aumento por tabla de emplazamiento según distancia', 'Oportunidad para entablar demanda reconvencional']
     ),
     ActuacionProcesal(
       id: 'civ_replica', materiaId: 'priv_civ_ord',
-      nombreActuacion: 'Réplica', rolProcesal: 'Demandante',
-      tipoInstitucion: 'Alegación', articuloYNorma: 'Art. 311 CPC',
+      nombreActuacion: 'Réplica Civil', rolProcesal: 'Demandante',
+      tipoInstitucion: 'Alegación Written', articuloYNorma: 'Art. 311 CPC',
       diasBase: 6, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
       elementosAConsiderar: ['Ampliación o modificación de peticiones sin alterar la acción deducida en la demanda']
     ),
     ActuacionProcesal(
       id: 'civ_duplica', materiaId: 'priv_civ_ord',
-      nombreActuacion: 'Dúplica', rolProcesal: 'Demandado',
-      tipoInstitucion: 'Alegación', articuloYNorma: 'Art. 312 CPC',
+      nombreActuacion: 'Dúplica Civil', rolProcesal: 'Demandado',
+      tipoInstitucion: 'Alegación Written', articuloYNorma: 'Art. 312 CPC',
       diasBase: 6, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
       elementosAConsiderar: ['Última oportunidad de alegación escrita antes de la fase de prueba o citación a oír sentencia']
     ),
     ActuacionProcesal(
-      id: 'civ_incidente', materiaId: 'priv_civ_ord',
-      nombreActuacion: 'Respuesta / Contestación de Incidente', rolProcesal: 'Parte Contueta',
-      tipoInstitucion: 'Incidente Ordinario', articuloYNorma: 'Art. 89 y 327 CPC',
-      diasBase: 3, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Plazo fatal para responder incidentes promovidos en el curso del juicio']
-    ),
-    ActuacionProcesal(
-      id: 'civ_repo', materiaId: 'priv_civ_ord',
-      nombreActuacion: 'Recurso de Reposición (Contra Autos y Decretos)', rolProcesal: 'Agraviado',
-      tipoInstitucion: 'Recurso Ordinario', articuloYNorma: 'Art. 181 CPC',
-      diasBase: 3, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Debe interponerse por escrito con fundamentos claros y precisos']
-    ),
-    ActuacionProcesal(
-      id: 'civ_repo_apel', materiaId: 'priv_civ_ord',
-      nombreActuacion: 'Reposición con Apelación en Subsidio', rolProcesal: 'Agraviado',
-      tipoInstitucion: 'Recurso Ordinario', articuloYNorma: 'Art. 188 CPC',
-      diasBase: 3, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Se pide la revocación al mismo tribunal y, para el caso de negativa, se alza la apelación']
-    ),
-    ActuacionProcesal(
-      id: 'civ_apelacion_def', materiaId: 'priv_civ_ord',
-      nombreActuacion: 'Apelación contra Sentencia Definitiva', rolProcesal: 'Agraviado',
-      tipoInstitucion: 'Recurso Ordinario de Alzada', articuloYNorma: 'Art. 189 CPC',
-      diasBase: 10, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Fundamentos de hecho y derecho', 'Peticiones concretas exigidas por la Ley N° 20.886 / autos acordados']
-    ),
-    ActuacionProcesal(
-      id: 'civ_apelacion_inter', materiaId: 'priv_civ_ord',
-      nombreActuacion: 'Apelación contra Sentencia Interlocutoria', rolProcesal: 'Agraviado',
-      tipoInstitucion: 'Recurso Ordinario de Alzada', articuloYNorma: 'Art. 189 CPC',
-      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Procede contra interlocutorias que pongan término al juicio o hagan imposible su continuación']
-    ),
-    ActuacionProcesal(
-      id: 'civ_casacion_forma', materiaId: 'priv_civ_ord',
-      nombreActuacion: 'Recurso de Casación en la Forma', rolProcesal: 'Agraviado',
-      tipoInstitucion: 'Recurso Extraordinario', articuloYNorma: 'Art. 770 inc. 1° CPC',
-      diasBase: 15, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Requiere preparación previa del recurso en las instancias previas (salvo excepciones legales)']
-    ),
-    ActuacionProcesal(
-      id: 'civ_casacion_fondo', materiaId: 'priv_civ_ord',
-      nombreActuacion: 'Recurso de Casación en el Fondo', rolProcesal: 'Agraviado',
-      tipoInstitucion: 'Recurso Extraordinario', articuloYNorma: 'Art. 770 inc. 2° CPC',
-      diasBase: 15, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Infracción de ley con influencia sustancial en lo dispositivo de la sentencia', 'Patrocinio especial Corte Suprema']
-    ),
-    ActuacionProcesal(
-      id: 'civ_queja', materiaId: 'priv_civ_ord',
-      nombreActuacion: 'Recurso de Queja (Contra Falta o Abuso Grave)', rolProcesal: 'Agraviado',
-      tipoInstitucion: 'Recurso Disciplinario Extraordinario', articuloYNorma: 'Art. 548 COT',
-      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Plazo fatal de 5 días hábiles desde la notificación, ampliable hasta 15 días si es fuera del territorio jurisdiccional de la Corte Suprema']
-    ),
-
-    // ==========================================
-    // 2. JUICIO EJECUTIVO Y APREMIOS
-    // ==========================================
-    ActuacionProcesal(
       id: 'ejec_opone', materiaId: 'priv_civ_ejec',
-      nombreActuacion: 'Oposición a la Ejecución (Excepciones Legales)', rolProcesal: 'Ejecutado',
+      nombreActuacion: 'Oposición a la Ejecución en Juicio Ejecutivo (Excepciones)', rolProcesal: 'Ejecutado',
       tipoInstitucion: 'Defensa Ejecutiva', articuloYNorma: 'Art. 459 CPC (Ley N° 21.394)',
       diasBase: 8, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: true,
       elementosAConsiderar: ['Excepciones taxativas del Art. 464 CPC', 'Señalar medios de prueba en el mismo escrito de oposición']
@@ -237,9 +344,111 @@ class LegalDatabase {
       diasBase: 4, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
       elementosAConsiderar: ['Contestación a las excepciones opuestas por el ejecutado con citación']
     ),
+    ActuacionProcesal(
+      id: 'civ_arriendo_devuelveme', materiaId: 'priv_civ_arriendo',
+      nombreActuacion: 'Demanda de Restitución e Inmueble - Ley Devuélveme Mi Casa (Ley N° 21.461)', rolProcesal: 'Arrendador / Demandante',
+      tipoInstitucion: 'Juicio Especial de Arrendamiento', articuloYNorma: 'Ley N° 18.101 y Ley N° 21.461',
+      diasBase: 10, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Medida cautelar de restitución precautoria por morosidad o consumo de servicios', 'Requerimiento de pago de 10 días']
+    ),
+    ActuacionProcesal(
+      id: 'civ_precario', materiaId: 'priv_civ_arriendo',
+      nombreActuacion: 'Juicio Sumario de Precario (Restitución Inmueble sin Título)', rolProcesal: 'Dueño / Demandante',
+      tipoInstitucion: 'Juicio Sumario Especial', articuloYNorma: 'Art. 2195 inc. 2° Código Civil',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Audiencia de contestación y conciliación al 5° día hábil tras la notificación']
+    ),
+    ActuacionProcesal(
+      id: 'civ_repo', materiaId: 'priv_civ_ord',
+      nombreActuacion: 'Recurso de Reposición (Contra Autos y Decretos)', rolProcesal: 'Agraviado',
+      tipoInstitucion: 'Recurso Ordinario', articuloYNorma: 'Art. 181 CPC',
+      diasBase: 3, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Debe interponerse por escrito con fundamentos claros y precisos']
+    ),
+    ActuacionProcesal(
+      id: 'civ_apelacion_def', materiaId: 'priv_civ_ord',
+      nombreActuacion: 'Apelación contra Sentencia Definitiva Civil', rolProcesal: 'Agraviado',
+      tipoInstitucion: 'Recurso Ordinario de Alzada', articuloYNorma: 'Art. 189 CPC',
+      diasBase: 10, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Fundamentos de hecho y derecho', 'Peticiones concretas exigidas por la Ley N° 20.886 / autos acordados']
+    ),
+    ActuacionProcesal(
+      id: 'civ_apelacion_inter', materiaId: 'priv_civ_ord',
+      nombreActuacion: 'Apelación contra Sentencia Interlocutoria Civil', rolProcesal: 'Agraviado',
+      tipoInstitucion: 'Recurso Ordinario de Alzada', articuloYNorma: 'Art. 189 CPC',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Procede contra interlocutorias que pongan término al juicio o hagan imposible su continuación']
+    ),
+    ActuacionProcesal(
+      id: 'civ_casacion_forma', materiaId: 'priv_civ_ord',
+      nombreActuacion: 'Recurso de Casación en la Forma / Fondo Civil', rolProcesal: 'Agraviado',
+      tipoInstitucion: 'Recurso Extraordinario', articuloYNorma: 'Art. 770 CPC',
+      diasBase: 15, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Infracción de ley con influencia sustancial en lo dispositivo de la sentencia', 'Patrocinio especial Corte Suprema']
+    ),
 
     // ==========================================
-    // 3. DERECHO PROCESAL PENAL (CPP)
+    // 3. DERECHO DE FAMILIA
+    // ==========================================
+    ActuacionProcesal(
+      id: 'fam_alimentos_contesta', materiaId: 'mix_fam_alimentos',
+      nombreActuacion: 'Contestación Demanda de Alimentos (Fijación, Aumento, Rebaja o Cese)', rolProcesal: 'Demandado / Alimentante',
+      tipoInstitucion: 'Procedimiento de Alimentos', articuloYNorma: 'Ley N° 14.908 y Art. 59 Ley N° 19.968',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Por escrito hasta 5 días antes de la audiencia preparatoria con liquidación y liquidaciones de sueldo']
+    ),
+    ActuacionProcesal(
+      id: 'fam_cuidado_personal', materiaId: 'mix_fam_cuidado_divorcio',
+      nombreActuacion: 'Demanda de Cuidado Personal / Tuición de Hijos', rolProcesal: 'Padre / Madre Demandante',
+      tipoInstitucion: 'Procedimiento Ordinario Familia', articuloYNorma: 'Art. 225 Código Civil y Ley N° 19.968',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Contestación escrita hasta 5 días antes de la audiencia preparatoria; informes psicosociales']
+    ),
+    ActuacionProcesal(
+      id: 'fam_relacion_directa', materiaId: 'mix_fam_cuidado_divorcio',
+      nombreActuacion: 'Demanda de Relación Directa y Regular (Régimen de Visitas)', rolProcesal: 'Padre / Madre Demandante',
+      tipoInstitucion: 'Procedimiento Ordinario Familia', articuloYNorma: 'Art. 229 Código Civil y Ley N° 19.968',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Contestación escrita hasta 5 días antes de la audiencia preparatoria con propuesta de régimen']
+    ),
+    ActuacionProcesal(
+      id: 'fam_divorcio_compensacion', materiaId: 'mix_fam_cuidado_divorcio',
+      nombreActuacion: 'Demanda de Divorcio (Unilateral / Mutuo Acuerdo / Culposo) y Compensación', rolProcesal: 'Cónyuge Demandante',
+      tipoInstitucion: 'Juicio de Divorcio', articuloYNorma: 'Ley N° 19.947 (Matrimonio Civil)',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Acreditar cese de convivencia (1 año mutuo acuerdo / 3 años unilateral) o causal de culpa']
+    ),
+    ActuacionProcesal(
+      id: 'fam_vif_medidas', materiaId: 'mix_fam_vif_proteccion',
+      nombreActuacion: 'Procedimiento por Violencia Intrafamiliar en Familia (VIF)', rolProcesal: 'Víctima / Denunciante',
+      tipoInstitucion: 'Procedimiento Especial VIF', articuloYNorma: 'Ley N° 20.066 y Ley N° 19.968',
+      diasBase: 1, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Medidas cautelares inmediatas (salida del hogar, prohibición de acercamiento, suspensión de visitas)']
+    ),
+    ActuacionProcesal(
+      id: 'fam_medida_proteccion', materiaId: 'mix_fam_vif_proteccion',
+      nombreActuacion: 'Medidas de Protección de Niños, Niñas y Adolescentes (NNA)', rolProcesal: 'Oficio / Solicitante',
+      tipoInstitucion: 'Protección de NNA', articuloYNorma: 'Art. 71 Ley N° 19.968',
+      diasBase: 5, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Audiencia preparatoria urgente dentro de 5 días desde la medida cautelar']
+    ),
+    ActuacionProcesal(
+      id: 'fam_filiacion', materiaId: 'mix_fam_vif_proteccion',
+      nombreActuacion: 'Juicio de Filiación / Impugnación o Reconocimiento de Paternidad', rolProcesal: 'Demandante',
+      tipoInstitucion: 'Procedimiento de Filiación', articuloYNorma: 'Arts. 179 y ss. Código Civil',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Prueba biológica de ADN obligatoria decretada por el juez de familia']
+    ),
+    ActuacionProcesal(
+      id: 'fam_apelacion', materiaId: 'mix_fam_alimentos',
+      nombreActuacion: 'Recurso de Apelación en Juicios de Familia', rolProcesal: 'Agraviado',
+      tipoInstitucion: 'Recurso de Alzada de Familia', articuloYNorma: 'Art. 67 Ley N° 19.968',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['5 días hábiles desde la notificación del fallo definitivo de primera instancia']
+    ),
+
+    // ==========================================
+    // 4. DERECHO PROCESAL PENAL (CPP)
     // ==========================================
     ActuacionProcesal(
       id: 'penal_amparo_juez', materiaId: 'pub_penal',
@@ -250,17 +459,10 @@ class LegalDatabase {
     ),
     ActuacionProcesal(
       id: 'penal_repo_audiencia', materiaId: 'pub_penal',
-      nombreActuacion: 'Reposición Oral en Audiencia', rolProcesal: 'Interviniente',
+      nombreActuacion: 'Reposición Oral en Audiencia Penal', rolProcesal: 'Interviniente',
       tipoInstitucion: 'Recurso Inmediato', articuloYNorma: 'Art. 362 CPP',
       diasBase: 0, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
       elementosAConsiderar: ['Se interpone y resuelve de forma verbal e inmediata en la misma audiencia']
-    ),
-    ActuacionProcesal(
-      id: 'penal_repo_escrito', materiaId: 'pub_penal',
-      nombreActuacion: 'Reposición por Escrito (Fuera de Audiencia)', rolProcesal: 'Interviniente',
-      tipoInstitucion: 'Recurso Ordinario Penal', articuloYNorma: 'Art. 362 CPP',
-      diasBase: 3, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Contra resoluciones dictadas sin citación o en trámites que no admiten debate oral previo']
     ),
     ActuacionProcesal(
       id: 'penal_apelacion', materiaId: 'pub_penal',
@@ -278,118 +480,7 @@ class LegalDatabase {
     ),
 
     // ==========================================
-    // 4. DERECHO CONSTITUCIONAL Y ACCIONES (CORTE APELACIONES Y SUPREMA)
-    // ==========================================
-    ActuacionProcesal(
-      id: 'const_proteccion', materiaId: 'pub_const',
-      nombreActuacion: 'Recurso de Protección Constitucional (Primera Instancia)', rolProcesal: 'Recurrente / Afectado',
-      tipoInstitucion: 'Acción Constitucional de Urgencia', articuloYNorma: 'Art. 20 CPR y AA CS',
-      diasBase: 30, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['30 días corridos fatales desde la ejecución del acto u omisión arbitraria/ilegal o conocimiento cierto', 'Solicitar Orden de No Innovar (ONI)']
-    ),
-    ActuacionProcesal(
-      id: 'const_amparo', materiaId: 'pub_const',
-      nombreActuacion: 'Recurso de Amparo / Habeas Corpus (Primera Instancia)', rolProcesal: 'Amparado / Recurrente',
-      tipoInstitucion: 'Acción Constitucional de Libertad', articuloYNorma: 'Art. 21 CPR',
-      diasBase: 0, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Sin plazo fijo de caducidad (interponible mientras subsista la privación o amenaza ilegal)']
-    ),
-    ActuacionProcesal(
-      id: 'const_amparo_econ', materiaId: 'pub_const',
-      nombreActuacion: 'Recurso de Amparo Económico', rolProcesal: 'Recurrente (Acción Pública)',
-      tipoInstitucion: 'Acción Constitucional Económica', articuloYNorma: 'Ley N° 18.971 y Art. 19 N° 21 CPR',
-      diasBase: 180, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Plazo de 6 meses corridos desde la infracción o amenaza a la libertad económica']
-    ),
-    ActuacionProcesal(
-      id: 'const_expropiacion', materiaId: 'pub_const',
-      nombreActuacion: 'Reclamación por Expropiación', rolProcesal: 'Expropiado / Reclamante',
-      tipoInstitucion: 'Reclamo Expropiatorio', articuloYNorma: 'Art. 19 N° 24 CPR y DL N° 2.186',
-      diasBase: 30, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['30 días corridos desde la publicación del acto expropiatorio en el Diario Oficial']
-    ),
-    ActuacionProcesal(
-      id: 'const_apelacion_prot', materiaId: 'pub_const',
-      nombreActuacion: 'Apelación contra Sentencia de Protección (Corte Suprema)', rolProcesal: 'Apelante / Agraviado',
-      tipoInstitucion: 'Recurso de Segunda Instancia', articuloYNorma: 'Auto Acordado CS sobre Protección',
-      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['5 días hábiles desde la notificación del fallo de la Corte de Apelaciones (Conoce la Tercera Sala CS)']
-    ),
-    ActuacionProcesal(
-      id: 'const_apelacion_amparo', materiaId: 'pub_const',
-      nombreActuacion: 'Apelación contra Sentencia de Amparo (Corte Suprema)', rolProcesal: 'Apelante',
-      tipoInstitucion: 'Recurso de Segunda Instancia Penal', articuloYNorma: 'Art. 21 CPR',
-      diasBase: 1, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['24 horas fatales desde la notificación de la sentencia de primera instancia (Conoce la Segunda Sala CS)']
-    ),
-    ActuacionProcesal(
-      id: 'const_nacionalidad', materiaId: 'pub_const',
-      nombreActuacion: 'Reclamo por Desconocimiento de Nacionalidad Chilena', rolProcesal: 'Reclamante',
-      tipoInstitucion: 'Acción Constitucional de Nacionalidad', articuloYNorma: 'Art. 12 CPR',
-      diasBase: 54, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['54 días hábiles procesales desde el acto u omisión gubernamental (Conoce el Pleno de la Corte Suprema)']
-    ),
-    ActuacionProcesal(
-      id: 'const_error_judicial', materiaId: 'pub_const',
-      nombreActuacion: 'Acción de Indemnización por Error Judicial', rolProcesal: 'Demandante / Absuelto',
-      tipoInstitucion: 'Demanda Patrimonial contra el Fisco', articuloYNorma: 'Art. 19 N° 7 letra i CPR',
-      diasBase: 180, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['6 meses corridos desde que quede firme la sentencia penal absolutoria o de sobreseimiento definitivo (Conoce el Pleno CS)']
-    ),
-
-    // ==========================================
-    // 5. TRIBUNAL CONSTITUCIONAL (TC - LEY N° 17.997)
-    // ==========================================
-    ActuacionProcesal(
-      id: 'tc_ina', materiaId: 'pub_tc',
-      nombreActuacion: 'Requerimiento de Inaplicabilidad por Inconstitucionalidad (INA)', rolProcesal: 'Requeriente (Parte / Juez)',
-      tipoInstitucion: 'Control Concreto de Constitucionalidad', articuloYNorma: 'Art. 93 N° 6 CPR y Art. 79 Ley N° 17.997',
-      diasBase: 0, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['En cualquier estado de la gestión judicial pendiente', 'Permite solicitar suspensión del procedimiento de origen']
-    ),
-    ActuacionProcesal(
-      id: 'tc_inc', materiaId: 'pub_tc',
-      nombreActuacion: 'Acción de Inconstitucionalidad de Precepto Legal (INC)', rolProcesal: 'Requeriente / Ciudadano',
-      tipoInstitucion: 'Control Abstracto de Constitucionalidad', articuloYNorma: 'Art. 93 N° 7 CPR y Art. 93 Ley N° 17.997',
-      diasBase: 0, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Requiere sentencia previa de inaplicabilidad dictada por el TC', 'Efecto derogatorio erga omnes si se acoge por 4/5 partes']
-    ),
-    ActuacionProcesal(
-      id: 'tc_autos_acordados', materiaId: 'pub_tc',
-      nombreActuacion: 'Inconstitucionalidad de Autos Acordados', rolProcesal: 'Requeriente (Autoridades Legales)',
-      tipoInstitucion: 'Control Normativo', articuloYNorma: 'Art. 93 N° 2 CPR y Art. 63 Ley N° 17.997',
-      diasBase: 30, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['30 días corridos desde la publicación del Auto Acordado de la Corte Suprema, Cortes o TRICEL']
-    ),
-    ActuacionProcesal(
-      id: 'tc_contienda', materiaId: 'pub_tc',
-      nombreActuacion: 'Requerimiento por Contienda de Competencia', rolProcesal: 'Órgano Requirente',
-      tipoInstitucion: 'Conflicto de Competencia', articuloYNorma: 'Art. 93 N° 12 CPR y Art. 108 Ley N° 17.997',
-      diasBase: 10, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['10 días hábiles desde que la autoridad requerida afirmare su competencia o desconociere la del requirente']
-    ),
-
-
-    // ==========================================
-    // 5. DERECHO ADMINISTRATIVO Y LEY 19.880
-    // ==========================================
-    ActuacionProcesal(
-      id: 'admin_reposicion', materiaId: 'pub_admin',
-      nombreActuacion: 'Recurso de Reposición Administrativa', rolProcesal: 'Interesado',
-      tipoInstitucion: 'Impugnación Administrativa', articuloYNorma: 'Art. 59 Ley N° 19.880',
-      diasBase: 5, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Cómputo en días hábiles administrativos (Lunes a Viernes, excluyendo festivos)', 'Apelación jerárquica en subsidio']
-    ),
-    ActuacionProcesal(
-      id: 'admin_reclamo_ilegalidad', materiaId: 'pub_admin',
-      nombreActuacion: 'Reclamo de Ilegalidad Municipal / Servicios', rolProcesal: 'Afectado',
-      tipoInstitucion: 'Contencioso Administrativo', articuloYNorma: 'Art. 151 Ley N° 18.695 (Orgánica de Municipalidades)',
-      diasBase: 15, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Contra decretos alcaldicios o resoluciones ante la Corte de Apelaciones respectiva']
-    ),
-
-    // ==========================================
-    // 6. DERECHO TRIBUTARIO Y ADUANERO (TTA / SII)
+    // 5. DERECHO TRIBUTARIO Y ADUANERO (TTA / SII)
     // ==========================================
     ActuacionProcesal(
       id: 'trib_reclamo_sii', materiaId: 'pub_trib',
@@ -407,39 +498,60 @@ class LegalDatabase {
     ),
 
     // ==========================================
-    // 7. DERECHO DEL TRABAJO
+    // 6. JUZGADOS DE POLICÍA LOCAL
     // ==========================================
     ActuacionProcesal(
-      id: 'lab_contestacion', materiaId: 'mix_lab',
-      nombreActuacion: 'Contestación de Demanda Laboral (Juicio Ordinario)', rolProcesal: 'Demandado (Empleador)',
-      tipoInstitucion: 'Defensa Laboral', articuloYNorma: 'Art. 452 y 453 Código del Trabajo',
-      diasBase: 5, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Debe presentarse por escrito hasta 5 días antes de la audiencia preparatoria (o contarse según reglas del tribunal)']
+      id: 'jpl_transito_querella', materiaId: 'mix_pol_loc',
+      nombreActuacion: 'Querella e Infracción por Accidentes de Tránsito (JPL)', rolProcesal: 'Denunciante / Afectado',
+      tipoInstitucion: 'Procedimiento de Policía Local', articuloYNorma: 'Ley N° 18.287 y Ley N° 18.290',
+      diasBase: 180, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Prescripción de 6 meses desde la ocurrencia del accidente de tránsito']
     ),
     ActuacionProcesal(
-      id: 'lab_nulidad', materiaId: 'mix_lab',
-      nombreActuacion: 'Recurso de Nulidad Laboral', rolProcesal: 'Agraviado',
-      tipoInstitucion: 'Recurso Laboral Extraordinario', articuloYNorma: 'Art. 477 Código del Trabajo',
-      diasBase: 10, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Infracción de ley con influencia sustancial en lo dispositivo del fallo o vulneración de garantías']
+      id: 'jpl_consumidor_demanda', materiaId: 'mix_pol_loc',
+      nombreActuacion: 'Demanda por Ley de Protección de los Derechos de los Consumidores (LPDC)', rolProcesal: 'Consumidor Demandante',
+      tipoInstitucion: 'Procedimiento del Consumidor', articuloYNorma: 'Ley N° 19.496 y Ley N° 18.287',
+      diasBase: 730, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Prescripción de 2 años desde que cesó la infracción o compra del producto/servicio']
+    ),
+    ActuacionProcesal(
+      id: 'jpl_apelacion', materiaId: 'mix_pol_loc',
+      nombreActuacion: 'Recurso de Apelación contra Sentencia de Policía Local', rolProcesal: 'Parte Agraviada',
+      tipoInstitucion: 'Recurso de Alzada de Policía Local', articuloYNorma: 'Art. 32 Ley N° 18.287',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['5 días hábiles desde la notificación para apelar ante la Corte de Apelaciones respectiva']
     ),
 
     // ==========================================
-    // 8. DERECHO DE FAMILIA
+    // 7. DERECHO CONSTITUCIONAL Y ADMINISTRATIVO
     // ==========================================
     ActuacionProcesal(
-      id: 'fam_contestacion', materiaId: 'mix_fam',
-      nombreActuacion: 'Contestación de Demanda de Familia', rolProcesal: 'Demandado',
-      tipoInstitucion: 'Defensa de Familia', articuloYNorma: 'Art. 59 Ley N° 19.968',
-      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Por escrito hasta 5 días antes de la audiencia preparatoria o comparecencia directa en audiencia según el procedimiento']
+      id: 'const_proteccion', materiaId: 'pub_const',
+      nombreActuacion: 'Recurso de Protección Constitucional (Primera Instancia)', rolProcesal: 'Recurrente / Afectado',
+      tipoInstitucion: 'Acción Constitucional de Urgencia', articuloYNorma: 'Art. 20 CPR y AA CS',
+      diasBase: 30, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
+      elementosAConsiderar: ['30 días corridos fatales desde la ejecución del acto u omisión arbitraria/ilegal o conocimiento cierto', 'Solicitar Orden de No Innovar (ONI)']
     ),
     ActuacionProcesal(
-      id: 'fam_apelacion', materiaId: 'mix_fam',
-      nombreActuacion: 'Recurso de Apelación en Juicios de Familia', rolProcesal: 'Agraviado',
-      tipoInstitucion: 'Recurso de Alzada de Familia', articuloYNorma: 'Art. 67 Ley N° 19.968',
-      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Se interpone por escrito ante el juez de familia dentro de 5 días desde la notificación de la sentencia definitiva o resolución que pone término al juicio']
+      id: 'const_amparo', materiaId: 'pub_const',
+      nombreActuacion: 'Recurso de Amparo / Habeas Corpus (Primera Instancia)', rolProcesal: 'Amparado / Recurrente',
+      tipoInstitucion: 'Acción Constitucional de Libertad', articuloYNorma: 'Art. 21 CPR',
+      diasBase: 0, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Sin plazo fijo de caducidad (interponible mientras subsista la privación o amenaza ilegal)']
+    ),
+    ActuacionProcesal(
+      id: 'tc_ina', materiaId: 'pub_tc',
+      nombreActuacion: 'Requerimiento de Inaplicabilidad por Inconstitucionalidad (INA)', rolProcesal: 'Requeriente (Parte / Juez)',
+      tipoInstitucion: 'Control Concreto de Constitucionalidad', articuloYNorma: 'Art. 93 N° 6 CPR y Art. 79 Ley N° 17.997',
+      diasBase: 0, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
+      elementosAConsiderar: ['En cualquier estado de la gestión judicial pendiente', 'Permite solicitar suspensión del procedimiento de origen']
+    ),
+    ActuacionProcesal(
+      id: 'admin_reposicion', materiaId: 'pub_const',
+      nombreActuacion: 'Recurso de Reposición Administrativa (Ley 19.880)', rolProcesal: 'Interesado',
+      tipoInstitucion: 'Impugnación Administrativa', articuloYNorma: 'Art. 59 Ley N° 19.880',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Cómputo en días hábiles administrativos (Lunes a Viernes, excluyendo festivos)', 'Apelación jerárquica en subsidio']
     ),
   ];
 
@@ -981,26 +1093,26 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
   DateTime _fechaNotificacion = DateTime.now();
 
   // Tipo de Letra y Rol / RUC
-  String _tipoLetra = 'Rol C (Ordinario Civil)';
+  String _tipoLetra = 'Rol C (Civil - Ordinario, Ejecutivo, Sumario)';
   final TextEditingController _numeroCausaController = TextEditingController();
   final TextEditingController _anioCausaController = TextEditingController(text: DateTime.now().year.toString());
   final TextEditingController _rucController = TextEditingController();
 
   final List<String> _opcionesTiposLetra = [
-    'Rol C (Ordinario Civil)',
-    'Rol V (Voluntario Civil)',
-    'Rol E (Exequátur / Especial Civil)',
-    'Rol J (Ejecutivo Civil)',
-    'RIT O (Ordinario Penal / Laboral)',
-    'RIT P (Simplificado Penal / Monitorio Laboral)',
-    'RIT I (Investigación Garantía Penal)',
-    'RIT F (Familia Alimentos / Ordinario)',
-    'RIT C (Familia Cuidado Personal)',
-    'RIT M (Familia Protección)',
-    'RIT X (Familia Violencia Intrafamiliar)',
-    'RIT Z (Familia Cumplimiento)',
-    'RIT T (Tributario TTA)',
-    'RIT A (Aduanero TTA)',
+    'Rol C (Civil - Ordinario, Ejecutivo, Sumario)',
+    'Rol V (Civil - Voluntario)',
+    'Rol E (Civil - Exequátur / Especial)',
+    'Rol J (Cobranza / Ejecutivo Especial)',
+    'RIT O (Ordinario - Penal / Laboral)',
+    'RIT P (Simplificado - Penal / Monitorio Laboral)',
+    'RIT I (Garantía / Investigación Penal)',
+    'RIT F (Familia - Alimentos / Ordinario)',
+    'RIT C (Familia - Cuidado Personal)',
+    'RIT M (Familia - Medida de Protección)',
+    'RIT X (Familia - Violencia Intrafamiliar VIF)',
+    'RIT Z (Familia - Cumplimiento)',
+    'RIT T (TTA - Tributario)',
+    'RIT A (TTA - Aduanero)',
     'Rol JPL (Juzgado de Policía Local)',
     'Rol TC (Tribunal Constitucional)',
     'Rol Corte (Protección / Amparo / Apelación)',
@@ -1051,16 +1163,18 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
     final anio = _anioCausaController.text.trim();
     final ruc = _rucController.text.trim();
 
-    if (_tipoLetra == 'RUC (Registro Único de Causa)') {
+    if (_tipoLetra.startsWith('RUC')) {
       return ruc.isNotEmpty ? 'RUC $ruc' : 'RUC Pendiente';
     }
 
     String baseRol = '';
     if (_tipoLetra.startsWith('Rol ')) {
-      final letra = _tipoLetra.split(' ')[1];
+      final partes = _tipoLetra.split(' ');
+      final letra = partes[1]; // "C", "V", "E", "J", "JPL", "TC", "Corte"
       baseRol = num.isNotEmpty ? 'Rol $letra-$num-$anio' : 'Rol $letra-___-$anio';
     } else if (_tipoLetra.startsWith('RIT ')) {
-      final letra = _tipoLetra.split(' ')[1];
+      final partes = _tipoLetra.split(' ');
+      final letra = partes[1]; // "O", "P", "I", "F", "C", "M", "X", "Z", "T", "A"
       baseRol = num.isNotEmpty ? 'RIT $letra-$num-$anio' : 'RIT $letra-___-$anio';
     } else {
       baseRol = num.isNotEmpty ? '$num-$anio' : 'Sin Rol Definido';
@@ -1070,6 +1184,113 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
       return 'RUC $ruc | $baseRol';
     }
     return baseRol;
+  }
+
+  void _abrirModalBuscadorTribunales() {
+    String filtroTexto = '';
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            final listaFiltrada = LegalDatabase.tribunales.where((t) {
+              if (filtroTexto.isEmpty) return true;
+              final q = filtroTexto.toLowerCase();
+              return t.nombre.toLowerCase().contains(q) ||
+                     t.comuna.toLowerCase().contains(q) ||
+                     t.region.toLowerCase().contains(q);
+            }).toList();
+
+            return AlertDialog(
+              backgroundColor: const Color(0xFF161A22),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Row(
+                    children: [
+                      Icon(Icons.account_balance, color: Color(0xFF00FF66)),
+                      SizedBox(width: 8),
+                      Text('Lista Completa de Tribunales de Chile', style: TextStyle(color: Color(0xFF00FF66), fontSize: 18, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    autofocus: true,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText: 'Filtrar por nombre, comuna o región...',
+                      prefixIcon: const Icon(Icons.search, color: Color(0xFF00FF66)),
+                      suffixIcon: filtroTexto.isNotEmpty ? IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.white54),
+                        onPressed: () => setModalState(() => filtroTexto = ''),
+                      ) : null,
+                    ),
+                    onChanged: (val) => setModalState(() => filtroTexto = val),
+                  ),
+                ],
+              ),
+              content: SizedBox(
+                width: 650,
+                height: 450,
+                child: Column(
+                  children: [
+                    Text('Mostrando ${listaFiltrada.length} tribunales disponibles:', style: const TextStyle(fontSize: 12, color: Colors.white60)),
+                    const SizedBox(height: 8),
+                    Expanded(
+                      child: ListView.separated(
+                        itemCount: listaFiltrada.length,
+                        separatorBuilder: (_, __) => const Divider(color: Color(0xFF2E3848), height: 1),
+                        itemBuilder: (context, index) {
+                          final item = listaFiltrada[index];
+                          final esSeleccionado = _selectedTribunal?.nombre == item.nombre;
+                          return ListTile(
+                            dense: true,
+                            tileColor: esSeleccionado ? const Color(0xFF0F2B1D) : null,
+                            leading: Icon(
+                              Icons.gavel,
+                              color: esSeleccionado ? const Color(0xFF00FF66) : Colors.white38,
+                              size: 18,
+                            ),
+                            title: Text(
+                              item.nombre,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: esSeleccionado ? const Color(0xFF00FF66) : Colors.white,
+                                fontSize: 13,
+                              ),
+                            ),
+                            subtitle: Text(
+                              'Comuna: ${item.comuna} | Región: ${item.region} ${item.diasAumentoEmplazamiento > 0 ? " [+${item.diasAumentoEmplazamiento}d emplazamiento]" : ""}',
+                              style: TextStyle(
+                                color: item.diasAumentoEmplazamiento > 0 ? Colors.amber : Colors.white54,
+                                fontSize: 11,
+                              ),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                _selectedTribunal = item;
+                                _calculado = false;
+                              });
+                              Navigator.pop(ctx);
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: const Text('Cerrar', style: TextStyle(color: Colors.white70)),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 
   void _ejecutarCalculo() async {
@@ -1333,14 +1554,27 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                       const SizedBox(height: 20),
 
                       // BÚSQUEDA / AUTOCOMPLETADO DE TRIBUNAL COMPETENTE
-                      const Text('4. Tribunal Competente (Búsqueda Completa en Red Nacional):'),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Flexible(
+                            child: Text('4. Tribunal Competente (Búsqueda Completa en Red Nacional):', style: TextStyle(fontWeight: FontWeight.bold)),
+                          ),
+                          TextButton.icon(
+                            style: TextButton.styleFrom(foregroundColor: const Color(0xFF00FF66)),
+                            onPressed: _abrirModalBuscadorTribunales,
+                            icon: const Icon(Icons.list_alt, size: 18),
+                            label: const Text('Ver Catálogo Completo', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                          ),
+                        ],
+                      ),
                       const SizedBox(height: 8),
                       Autocomplete<TribunalItem>(
                         initialValue: TextEditingValue(text: _selectedTribunal != null ? '${_selectedTribunal!.nombre} - ${_selectedTribunal!.comuna}' : ''),
-                        displayStringForOption: (TribunalItem option) => '${option.nombre} - ${option.comuna} (${option.region})',
+                        displayStringForOption: (TribunalItem option) => '${option.nombre} - ${option.comuna}',
                         optionsBuilder: (TextEditingValue textEditingValue) {
                           if (textEditingValue.text.isEmpty) {
-                            return LegalDatabase.tribunales.take(15);
+                            return LegalDatabase.tribunales.take(20);
                           }
                           final query = textEditingValue.text.toLowerCase();
                           return LegalDatabase.tribunales.where((t) =>
@@ -1355,11 +1589,55 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                             _calculado = false;
                           });
                         },
+                        optionsViewBuilder: (context, onSelected, options) {
+                          return Align(
+                            alignment: Alignment.topLeft,
+                            child: Material(
+                              elevation: 8,
+                              color: const Color(0xFF1C222D),
+                              borderRadius: BorderRadius.circular(8),
+                              child: Container(
+                                width: 650,
+                                constraints: const BoxConstraints(maxHeight: 280),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF1C222D),
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(color: const Color(0xFF00FF66), width: 1.5),
+                                ),
+                                child: ListView.separated(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  itemCount: options.length,
+                                  separatorBuilder: (_, __) => const Divider(color: Color(0xFF2E3848), height: 1),
+                                  itemBuilder: (BuildContext context, int index) {
+                                    final TribunalItem option = options.elementAt(index);
+                                    return ListTile(
+                                      dense: true,
+                                      title: Text(
+                                        option.nombre,
+                                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                                      ),
+                                      subtitle: Text(
+                                        'Comuna: ${option.comuna} | Región: ${option.region} ${option.diasAumentoEmplazamiento > 0 ? " [+${option.diasAumentoEmplazamiento}d emplazamiento]" : ""}',
+                                        style: TextStyle(
+                                          color: option.diasAumentoEmplazamiento > 0 ? Colors.amber : const Color(0xFF00FF66),
+                                          fontSize: 11,
+                                        ),
+                                      ),
+                                      onTap: () => onSelected(option),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                         fieldViewBuilder: (context, controller, focusNode, onEditingComplete) {
                           return TextField(
                             controller: controller,
                             focusNode: focusNode,
                             onEditingComplete: onEditingComplete,
+                            style: const TextStyle(color: Colors.white, fontSize: 13),
                             decoration: InputDecoration(
                               prefixIcon: const Icon(Icons.account_balance, color: Color(0xFF00FF66)),
                               suffixIcon: IconButton(
@@ -1370,7 +1648,7 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                                 },
                               ),
                               hintText: 'Buscar por nombre, comuna o región (ej: Santiago 30 civil, TTA, JPL Las Condes...)',
-                              labelText: 'Seleccionar / Buscar Tribunal',
+                              labelText: 'Seleccionar / Buscar Tribunal Competente',
                             ),
                           );
                         },
