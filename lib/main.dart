@@ -1098,27 +1098,99 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
   final TextEditingController _anioCausaController = TextEditingController(text: DateTime.now().year.toString());
   final TextEditingController _rucController = TextEditingController();
 
-  final List<String> _opcionesTiposLetra = [
-    'Rol C (Civil - Ordinario, Ejecutivo, Sumario)',
-    'Rol V (Civil - Voluntario)',
-    'Rol E (Civil - Exequátur / Especial)',
-    'Rol J (Cobranza / Ejecutivo Especial)',
-    'RIT O (Ordinario - Penal / Laboral)',
-    'RIT P (Simplificado - Penal / Monitorio Laboral)',
-    'RIT I (Garantía / Investigación Penal)',
-    'RIT F (Familia - Alimentos / Ordinario)',
-    'RIT C (Familia - Cuidado Personal)',
-    'RIT M (Familia - Medida de Protección)',
-    'RIT X (Familia - Violencia Intrafamiliar VIF)',
-    'RIT Z (Familia - Cumplimiento)',
-    'RIT T (TTA - Tributario)',
-    'RIT A (TTA - Aduanero)',
-    'Rol JPL (Juzgado de Policía Local)',
-    'Rol TC (Tribunal Constitucional)',
-    'Rol Corte (Protección / Amparo / Apelación)',
-    'RUC (Registro Único de Causa)',
-    'Libre / Personalizado',
-  ];
+  List<String> _obtenerOpcionesTiposLetraParaMateria(MateriaSubmateria? materia) {
+    if (materia == null) return ['Libre / Personalizado'];
+
+    final id = materia.id;
+
+    // Laboral
+    if (id.startsWith('mix_lab')) {
+      return [
+        'RIT O (Ordinario Laboral / Despido)',
+        'RIT P (Monitorio Laboral ≤ 10 UTM)',
+        'RIT T (Tutela Laboral / Derechos Fundamentales)',
+        'RIT C (Cobranza Laboral / Previsional)',
+        'RUC (Registro Único de Causa Laboral)',
+        'Rol Corte (Recurso de Nulidad / Unificación)',
+        'Libre / Personalizado',
+      ];
+    }
+
+    // Civil y Arrendamiento
+    if (id.startsWith('priv_civ') || id.startsWith('priv_com')) {
+      return [
+        'Rol C (Civil - Ordinario, Ejecutivo, Sumario, Arriendo)',
+        'Rol V (Civil - Asuntos Voluntarios)',
+        'Rol E (Civil - Exequátur / Especial)',
+        'Rol J (Cobranza / Ejecutivo Especial)',
+        'Rol Corte (Apelación / Casación Civil)',
+        'Libre / Personalizado',
+      ];
+    }
+
+    // Familia
+    if (id.startsWith('mix_fam')) {
+      return [
+        'RIT F (Familia - Alimentos / Divorcio / Ordinario)',
+        'RIT C (Familia - Cuidado Personal / Tuición / Visitas)',
+        'RIT M (Familia - Medidas de Protección NNA)',
+        'RIT X (Familia - Violencia Intrafamiliar VIF)',
+        'RIT Z (Familia - Cumplimiento de Sentencia)',
+        'RUC (Registro Único de Causa Familia)',
+        'Rol Corte (Apelación Familia / Protección)',
+        'Libre / Personalizado',
+      ];
+    }
+
+    // Penal
+    if (id == 'pub_penal') {
+      return [
+        'RIT O (Juicio Oral Penal - TOP)',
+        'RIT P (Procedimiento Simplificado / Abreviado Penal)',
+        'RIT I (Garantía / Investigación Penal)',
+        'RUC (Registro Único de Causa Penal)',
+        'Rol Corte (Nulidad / Apelación / Amparo Penal)',
+        'Libre / Personalizado',
+      ];
+    }
+
+    // Tributario y Aduanero
+    if (id == 'pub_trib') {
+      return [
+        'RIT T (TTA - Tributario)',
+        'RIT A (TTA - Aduanero)',
+        'RUC (Registro Único TTA)',
+        'Rol Corte (Apelación / Casación TTA)',
+        'Libre / Personalizado',
+      ];
+    }
+
+    // Policía Local
+    if (id == 'mix_pol_loc') {
+      return [
+        'Rol JPL (Juzgado de Policía Local)',
+        'Rol Corte (Apelación Policía Local)',
+        'Libre / Personalizado',
+      ];
+    }
+
+    // Constitucional / Administrativo
+    if (id == 'pub_const' || id == 'pub_tc' || id == 'pub_admin') {
+      return [
+        'Rol Corte (Recurso de Protección / Amparo)',
+        'Rol TC (Tribunal Constitucional - INA / INC)',
+        'RUC / Registro Administrativo',
+        'Libre / Personalizado',
+      ];
+    }
+
+    return [
+      'Rol C (Civil - Ordinario, Ejecutivo, Sumario)',
+      'RIT O (Ordinario)',
+      'RUC (Registro Único de Causa)',
+      'Libre / Personalizado',
+    ];
+  }
 
   bool _calculado = false;
   DateTime? _fechaVencimientoFinal;
@@ -1146,9 +1218,21 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
     setState(() {
       _selectedMateria = LegalDatabase.materias.first;
       _updateActuacionesList();
+      final opciones = _obtenerOpcionesTiposLetraParaMateria(_selectedMateria);
+      _tipoLetra = opciones.first;
       _selectedTribunal = LegalDatabase.tribunales.first;
       _historial = historialCargado;
       _cargandoFeriados = false;
+    });
+  }
+
+  void _onMateriaChanged(MateriaSubmateria? nuevaMateria) {
+    setState(() {
+      _selectedMateria = nuevaMateria;
+      _updateActuacionesList();
+      final opciones = _obtenerOpcionesTiposLetraParaMateria(nuevaMateria);
+      _tipoLetra = opciones.first;
+      _calculado = false;
     });
   }
 
@@ -1170,11 +1254,11 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
     String baseRol = '';
     if (_tipoLetra.startsWith('Rol ')) {
       final partes = _tipoLetra.split(' ');
-      final letra = partes[1]; // "C", "V", "E", "J", "JPL", "TC", "Corte"
+      final letra = partes[1];
       baseRol = num.isNotEmpty ? 'Rol $letra-$num-$anio' : 'Rol $letra-___-$anio';
     } else if (_tipoLetra.startsWith('RIT ')) {
       final partes = _tipoLetra.split(' ');
-      final letra = partes[1]; // "O", "P", "I", "F", "C", "M", "X", "Z", "T", "A"
+      final letra = partes[1];
       baseRol = num.isNotEmpty ? 'RIT $letra-$num-$anio' : 'RIT $letra-___-$anio';
     } else {
       baseRol = num.isNotEmpty ? '$num-$anio' : 'Sin Rol Definido';
@@ -1401,6 +1485,7 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
     }
 
     final actuacionesFiltradas = LegalDatabase.actuaciones.where((a) => a.materiaId == _selectedMateria?.id).toList();
+    final opcionesLetrasActuales = _obtenerOpcionesTiposLetraParaMateria(_selectedMateria);
 
     return Scaffold(
       appBar: AppBar(
@@ -1419,9 +1504,17 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
-        child: Center(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/background.jpg'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(Colors.black87, BlendMode.darken),
+          ),
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24.0),
+          child: Center(
           child: Container(
             constraints: const BoxConstraints(maxWidth: 1050),
             child: Column(
@@ -1447,7 +1540,7 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                         isExpanded: true,
                         initialValue: _selectedMateria,
                         items: LegalDatabase.materias.map((m) => DropdownMenuItem(value: m, child: Text(m.displayName, style: const TextStyle(fontSize: 13)))).toList(),
-                        onChanged: (val) => setState(() { _selectedMateria = val; _updateActuacionesList(); }),
+                        onChanged: _onMateriaChanged,
                       ),
                       const SizedBox(height: 20),
 
@@ -1461,7 +1554,7 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                       ),
                       const SizedBox(height: 20),
 
-                      // SECCIÓN DE IDENTIFICACIÓN DE CAUSA (ROL / RUC / RIT POR TIPO DE LETRAS)
+                      // SECCIÓN DE IDENTIFICACIÓN DE CAUSA (FILTRADA SEGÚN MATERIA)
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
@@ -1478,7 +1571,7 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                                 SizedBox(width: 8),
                                 Flexible(
                                   child: Text(
-                                    '3. Identificación de Causa (Rol / RUC / RIT por Letras de Materia):',
+                                    '3. Identificación de Causa (Letras correspondientes a la Materia):',
                                     style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                                   ),
                                 ),
@@ -1491,9 +1584,9 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                                   flex: 3,
                                   child: DropdownButtonFormField<String>(
                                     isExpanded: true,
-                                    initialValue: _tipoLetra,
-                                    decoration: const InputDecoration(labelText: 'Tipo de Causa / Letra'),
-                                    items: _opcionesTiposLetra.map((l) => DropdownMenuItem(value: l, child: Text(l, style: const TextStyle(fontSize: 12)))).toList(),
+                                    value: opcionesLetrasActuales.contains(_tipoLetra) ? _tipoLetra : opcionesLetrasActuales.first,
+                                    decoration: const InputDecoration(labelText: 'Tipo de Causa / Letra (Materia Seleccionada)'),
+                                    items: opcionesLetrasActuales.map((l) => DropdownMenuItem(value: l, child: Text(l, style: const TextStyle(fontSize: 12)))).toList(),
                                     onChanged: (val) {
                                       if (val != null) setState(() { _tipoLetra = val; _calculado = false; });
                                     },
@@ -1553,104 +1646,46 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                       ),
                       const SizedBox(height: 20),
 
-                      // BÚSQUEDA / AUTOCOMPLETADO DE TRIBUNAL COMPETENTE
+                      // TRIBUNAL COMPETENTE (MENÚ DESPLEGABLE DIRECTO + MODAL BÚSQUEDA)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Flexible(
-                            child: Text('4. Tribunal Competente (Búsqueda Completa en Red Nacional):', style: TextStyle(fontWeight: FontWeight.bold)),
+                            child: Text('4. Tribunal Competente (Menú Desplegable Directo):', style: TextStyle(fontWeight: FontWeight.bold)),
                           ),
                           TextButton.icon(
                             style: TextButton.styleFrom(foregroundColor: const Color(0xFF00FF66)),
                             onPressed: _abrirModalBuscadorTribunales,
-                            icon: const Icon(Icons.list_alt, size: 18),
-                            label: const Text('Ver Catálogo Completo', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                            icon: const Icon(Icons.search, size: 18),
+                            label: const Text('🔍 Buscar en Catálogo', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
                           ),
                         ],
                       ),
                       const SizedBox(height: 8),
-                      Autocomplete<TribunalItem>(
-                        initialValue: TextEditingValue(text: _selectedTribunal != null ? '${_selectedTribunal!.nombre} - ${_selectedTribunal!.comuna}' : ''),
-                        displayStringForOption: (TribunalItem option) => '${option.nombre} - ${option.comuna}',
-                        optionsBuilder: (TextEditingValue textEditingValue) {
-                          if (textEditingValue.text.isEmpty) {
-                            return LegalDatabase.tribunales.take(20);
+                      DropdownButtonFormField<TribunalItem>(
+                        isExpanded: true,
+                        value: _selectedTribunal,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.account_balance, color: Color(0xFF00FF66)),
+                          labelText: 'Seleccionar Tribunal de Menú Desplegable',
+                        ),
+                        items: LegalDatabase.tribunales.map((t) {
+                          return DropdownMenuItem<TribunalItem>(
+                            value: t,
+                            child: Text(
+                              '${t.nombre} - ${t.comuna} (${t.region}) ${t.diasAumentoEmplazamiento > 0 ? "[+${t.diasAumentoEmplazamiento}d emplazamiento]" : ""}',
+                              style: const TextStyle(fontSize: 13, color: Colors.white),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (val) {
+                          if (val != null) {
+                            setState(() {
+                              _selectedTribunal = val;
+                              _calculado = false;
+                            });
                           }
-                          final query = textEditingValue.text.toLowerCase();
-                          return LegalDatabase.tribunales.where((t) =>
-                            t.nombre.toLowerCase().contains(query) ||
-                            t.comuna.toLowerCase().contains(query) ||
-                            t.region.toLowerCase().contains(query)
-                          );
-                        },
-                        onSelected: (TribunalItem selection) {
-                          setState(() {
-                            _selectedTribunal = selection;
-                            _calculado = false;
-                          });
-                        },
-                        optionsViewBuilder: (context, onSelected, options) {
-                          return Align(
-                            alignment: Alignment.topLeft,
-                            child: Material(
-                              elevation: 8,
-                              color: const Color(0xFF1C222D),
-                              borderRadius: BorderRadius.circular(8),
-                              child: Container(
-                                width: 650,
-                                constraints: const BoxConstraints(maxHeight: 280),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFF1C222D),
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: const Color(0xFF00FF66), width: 1.5),
-                                ),
-                                child: ListView.separated(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  itemCount: options.length,
-                                  separatorBuilder: (_, __) => const Divider(color: Color(0xFF2E3848), height: 1),
-                                  itemBuilder: (BuildContext context, int index) {
-                                    final TribunalItem option = options.elementAt(index);
-                                    return ListTile(
-                                      dense: true,
-                                      title: Text(
-                                        option.nombre,
-                                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
-                                      ),
-                                      subtitle: Text(
-                                        'Comuna: ${option.comuna} | Región: ${option.region} ${option.diasAumentoEmplazamiento > 0 ? " [+${option.diasAumentoEmplazamiento}d emplazamiento]" : ""}',
-                                        style: TextStyle(
-                                          color: option.diasAumentoEmplazamiento > 0 ? Colors.amber : const Color(0xFF00FF66),
-                                          fontSize: 11,
-                                        ),
-                                      ),
-                                      onTap: () => onSelected(option),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                        fieldViewBuilder: (context, controller, focusNode, onEditingComplete) {
-                          return TextField(
-                            controller: controller,
-                            focusNode: focusNode,
-                            onEditingComplete: onEditingComplete,
-                            style: const TextStyle(color: Colors.white, fontSize: 13),
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(Icons.account_balance, color: Color(0xFF00FF66)),
-                              suffixIcon: IconButton(
-                                icon: const Icon(Icons.clear, color: Colors.white54),
-                                onPressed: () {
-                                  controller.clear();
-                                  setState(() => _selectedTribunal = null);
-                                },
-                              ),
-                              hintText: 'Buscar por nombre, comuna o región (ej: Santiago 30 civil, TTA, JPL Las Condes...)',
-                              labelText: 'Seleccionar / Buscar Tribunal Competente',
-                            ),
-                          );
                         },
                       ),
                       if (_selectedTribunal != null && _selectedTribunal!.diasAumentoEmplazamiento > 0) ...[
@@ -1933,7 +1968,9 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
 }
+}
+
 
