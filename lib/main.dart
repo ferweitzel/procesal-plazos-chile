@@ -1538,7 +1538,7 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                       const SizedBox(height: 8),
                       DropdownButtonFormField<MateriaSubmateria>(
                         isExpanded: true,
-                        initialValue: _selectedMateria,
+                        value: _selectedMateria,
                         items: LegalDatabase.materias.map((m) => DropdownMenuItem(value: m, child: Text(m.displayName, style: const TextStyle(fontSize: 13)))).toList(),
                         onChanged: _onMateriaChanged,
                       ),
@@ -1548,7 +1548,7 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                       const SizedBox(height: 8),
                       DropdownButtonFormField<ActuacionProcesal>(
                         isExpanded: true,
-                        initialValue: _selectedActuacion,
+                        value: _selectedActuacion,
                         items: actuacionesFiltradas.map((a) => DropdownMenuItem(value: a, child: Text(a.displayName, style: const TextStyle(fontSize: 13)))).toList(),
                         onChanged: (val) => setState(() { _selectedActuacion = val; _calculado = false; }),
                       ),
