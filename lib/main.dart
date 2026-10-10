@@ -617,34 +617,6 @@ class LegalDatabase {
       diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
       elementosAConsiderar: ['5 días hábiles desde la notificación de la sentencia de JPL para apelar ante la Corte de Apelaciones']
     ),
-    ActuacionProcesal(
-      id: 'admin_sernac', materiaId: 'mix_pol_loc',
-      nombreActuacion: 'Reclamo y Mediación Individual / Colectiva ante el SERNAC', rolProcesal: 'Consumidor',
-      tipoInstitucion: 'Vía Administrativa SERNAC', articuloYNorma: 'Ley N° 19.496 sobre Protección de los Consumidores',
-      diasBase: 10, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Instancia de mediación administrativa voluntaria previa o paralela a la acción jurisdiccional en JPL']
-    ),
-    ActuacionProcesal(
-      id: 'admin_suseso', materiaId: 'mix_pol_loc',
-      nombreActuacion: 'Reclamo por Licencias Médicas Rechazadas o Accidentes (SUSESO / COMPIN)', rolProcesal: 'Trabajador / Afiliado',
-      tipoInstitucion: 'Fiscalización de Seguridad Social', articuloYNorma: 'DFL N° 44 del Ministerio del Trabajo y Ley N° 16.395 (SUSESO)',
-      diasBase: 15, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Reclamo administrativo ante la Superintendencia de Seguridad Social (SUSESO) contra rechazo de COMPIN o Isapre']
-    ),
-    ActuacionProcesal(
-      id: 'admin_superintendencias', materiaId: 'mix_pol_loc',
-      nombreActuacion: 'Reclamos y Denuncias ante Superintendencias (Salud, Pensiones, CMF)', rolProcesal: 'Afiliado / Usuario',
-      tipoInstitucion: 'Vía Administrativa de Fiscalización', articuloYNorma: 'Ley Orgánica de Superintendencias (Super de Salud, SP, CMF)',
-      diasBase: 10, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Reclamos por cobros abusivos de Isapres, AFP, Bancos y compañias aseguradoras ante el órgano regulador']
-    ),
-    ActuacionProcesal(
-      id: 'admin_seremi', materiaId: 'mix_pol_loc',
-      nombreActuacion: 'Recursos y Descargos en Sumarios Sanitarios ante la SEREMI de Salud', rolProcesal: 'Inculpado / Empresa',
-      tipoInstitucion: 'Procedimiento Administrativo Sanitario', articuloYNorma: 'Código Sanitario (DFL N° 725/1967)',
-      diasBase: 5, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Presentación de descargos dentro de 5 días hábiles administrativos desde la notificación del sumario sanitario']
-    ),
 
     // ==========================================
     // 8. DERECHO CONSTITUCIONAL Y ADMINISTRATIVO (pub_const)
