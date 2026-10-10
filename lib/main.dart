@@ -2097,15 +2097,21 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  const Text('RESULTADO DEL CÁLCULO LEGAL DE PLAZO', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF00FF66), fontSize: 16)),
+                                  const Expanded(
+                                    child: Text(
+                                      'RESULTADO DEL CÁLCULO LEGAL DE PLAZO',
+                                      style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF00FF66), fontSize: 15),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
                                   ElevatedButton.icon(
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color(0xFF00FF66),
                                       foregroundColor: Colors.black,
                                     ),
                                     onPressed: () => PdfService.previewOrPrintSinglePdf(_ultimoRegistro!),
-                                    icon: const Icon(Icons.picture_as_pdf, size: 18),
-                                    label: const Text('GENERAR PDF COMPROBANTE', style: TextStyle(fontWeight: FontWeight.bold)),
+                                    icon: const Icon(Icons.picture_as_pdf, size: 16),
+                                    label: const Text('GENERAR PDF', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                                   ),
                                 ],
                               ),
@@ -2115,7 +2121,10 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                               Text('Plazo Base: ${_selectedActuacion!.diasBase} días | Aumento Tabla: ${_ultimoRegistro!.additionalDays} días', style: const TextStyle(color: Colors.white70)),
                               const Divider(color: Color(0xFF00FF66), height: 20),
                               const Text('FECHA MÁXIMA DE PRESENTACIÓN / VENCIMIENTO:', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.amber)),
-                              SelectableText('${formatFechaEspanol(_fechaVencimientoFinal!)} a las 23:59:59 hrs.', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF00FF66))),
+                              Text(
+                                '${formatFechaEspanol(_fechaVencimientoFinal!)} a las 23:59:59 hrs.',
+                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF00FF66)),
+                              ),
                             ],
                           ),
                         ),
