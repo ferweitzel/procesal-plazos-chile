@@ -167,6 +167,20 @@ class LegalDatabase {
       submateria: 'Recursos de Protección, Amparo, INA y Ley 19.880',
       normativa: 'Constitución Política y Ley N° 19.880',
     ),
+    MateriaSubmateria(
+      id: 'concurso_tgr',
+      granGrupo: '9. Procedimientos Concursales e Insolvencia (SUPERIR y TGR)',
+      rama: 'Superintendencia de Insolvencia y TGR',
+      submateria: 'Liquidación, Reorganización y Cobro Fiscal',
+      normativa: 'Ley N° 20.720 y Código Tributario',
+    ),
+    MateriaSubmateria(
+      id: 'admin_super',
+      granGrupo: '10. Reclamos y Fiscalización ante Órganos y Superintendencias (SERNAC, SUSESO, SEREMI, CMF)',
+      rama: 'Vía Administrativa Extrajudicial',
+      submateria: 'Mediaciones, Licencias Rechazadas y Sumarios',
+      normativa: 'Ley N° 19.496, DFL 44 y Código Sanitario',
+    ),
   ];
 
   static final List<ActuacionProcesal> actuaciones = [
@@ -711,6 +725,77 @@ class LegalDatabase {
       tipoInstitucion: 'Impugnación Administrativa', articuloYNorma: 'Art. 59 Ley N° 19.880',
       diasBase: 5, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
       elementosAConsiderar: ['Cómputo en días hábiles administrativos (Lunes a Viernes, excluyendo festivos)', 'Apelación jerárquica en subsidio']
+    ),
+
+    // ==========================================
+    // 9. PROCEDIMIENTOS CONCURSALES E INSOLVENCIA (concurso_tgr)
+    // ==========================================
+    ActuacionProcesal(
+      id: 'concurso_liquidacion_voluntaria', materiaId: 'concurso_tgr',
+      nombreActuacion: 'Solicitud de Liquidación Voluntaria de Persona Deudora', rolProcesal: 'Deudor / Quiebra',
+      tipoInstitucion: 'Procedimiento Concursal', articuloYNorma: 'Ley N° 20.720 de Insolvencia y Reemprendimiento',
+      diasBase: 10, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Cesación de pago de obligaciones o insolvencia voluntaria', 'Ante la Superintendencia de Insolvencia y Reemprendimiento (SUPERIR) o Tribunales Civiles']
+    ),
+    ActuacionProcesal(
+      id: 'concurso_renegociacion', materiaId: 'concurso_tgr',
+      nombreActuacion: 'Procedimiento Concursal de Renegociación de Persona Deudora', rolProcesal: 'Deudor',
+      tipoInstitucion: 'Procedimiento Administrativo Concursal', articuloYNorma: 'Ley N° 20.720 (SUPERIR)',
+      diasBase: 30, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Ante la Superintendencia de Insolvencia y Reemprendimiento para renegociar pasivos con acreedores']
+    ),
+    ActuacionProcesal(
+      id: 'tgr_cobro_impuestos', materiaId: 'concurso_tgr',
+      nombreActuacion: 'Oposición y Defensa en Juicio Ejecutivo de Cobro Fiscal (TGR)', rolProcesal: 'Contribuyente Executado',
+      tipoInstitucion: 'Cobranza Coactiva TGR', articuloYNorma: 'Art. 168 y ss. Código Tributario y Ley Orgánica TGR',
+      diasBase: 10, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Excepciones en apremios por no pago de contribuciones, impuestos fiscales o multas aduaneras ante Tesorería General de la República']
+    ),
+    ActuacionProcesal(
+      id: 'tgr_prescripcion_deuda', materiaId: 'concurso_tgr',
+      nombreActuacion: 'Solicitud de Prescripción de Deudas Fiscales y Contribuciones (TGR / SII)', rolProcesal: 'Contribuyente / Deudor',
+      tipoInstitucion: 'Gestión Administrativa y Judicial de Prescripción', articuloYNorma: 'Art. 201 del Código Tributario',
+      diasBase: 30, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Plazo de prescripción de 3 años ampliable a 6 años en caso de impuestos no declarados o maliciosos']
+    ),
+
+    // ==========================================
+    // 10. RECLAMOS Y FISCALIZACIÓN ANTE ÓRGANOS Y SUPERINTENDENCIAS (admin_super)
+    // ==========================================
+    ActuacionProcesal(
+      id: 'admin_sernac_reclamo', materiaId: 'admin_super',
+      nombreActuacion: 'Reclamo y Procedimiento Voluntario Colectivo (SERNAC)', rolProcesal: 'Consumidor',
+      tipoInstitucion: 'Mediación Administrativa SERNAC', articuloYNorma: 'Ley N° 19.496 sobre Protección de los Consumidores',
+      diasBase: 10, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Instancia de mediación administrativa previa ante el SERNAC para mediación con empresas proveedoras de bienes o servicios']
+    ),
+    ActuacionProcesal(
+      id: 'admin_suseso_recurso', materiaId: 'admin_super',
+      nombreActuacion: 'Reclamo por Licencias Médicas Rechazadas o Accidentes del Trabajo (SUSESO)', rolProcesal: 'Trabajador / Afiliado',
+      tipoInstitucion: 'Superintendencia de Seguridad Social', articuloYNorma: 'DFL N° 44 y Ley N° 16.395 (SUSESO)',
+      diasBase: 15, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Apelación administrativa ante la SUSESO contra resoluciones de COMPIN o Isapre']
+    ),
+    ActuacionProcesal(
+      id: 'admin_super_salud', materiaId: 'admin_super',
+      nombreActuacion: 'Reclamo por Alza GES, Cobertura o Cobros Abusivos (Superintendencia de Salud)', rolProcesal: 'Afiliado / Beneficiario',
+      tipoInstitucion: 'Superintendencia de Salud', articuloYNorma: 'Ley N° 18.933 y DFL N° 1 de Salud',
+      diasBase: 15, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Reclamo formal contra Isapre o Fonasa ante la Superintendencia de Salud']
+    ),
+    ActuacionProcesal(
+      id: 'admin_seremi_sanitario', materiaId: 'admin_super',
+      nombreActuacion: 'Descargos en Sumario Sanitario (SEREMI de Salud)', rolProcesal: 'Inculpado',
+      tipoInstitucion: 'Procedimiento Administrativo Sanitario', articuloYNorma: 'Código Sanitario (DFL N° 725/1967)',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
+      elementosAConsiderar: ['5 días hábiles administrativos para presentar descargos formales ante la SEREMI de Salud']
+    ),
+    ActuacionProcesal(
+      id: 'admin_cgr_dictamen', materiaId: 'admin_super',
+      nombreActuacion: 'Solicitud de Pronunciamiento o Dictamen (Contraloría General de la República - CGR)', rolProcesal: 'Ciudadano / Funcionario Público',
+      tipoInstitucion: 'Control de Juridicidad Administrativa', articuloYNorma: 'Ley N° 10.336 de Organización y Atribuciones de la CGR',
+      diasBase: 30, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Reclamo de ilegalidad o solicitud de dictamen sobre probidad y legalidad de actuaciones de servicios públicos']
     ),
   ];
 
@@ -1343,6 +1428,27 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
       ];
     }
 
+    // Concursal y Tesorería
+    if (id == 'concurso_tgr') {
+      return [
+        'RIT Q (Procedimiento Concursal / Liquidación)',
+        'RIT T (Juicio Ejecutivo TGR / Cobro Fiscal)',
+        'RUC / Folio SUPERIR',
+        'Libre / Personalizado',
+      ];
+    }
+
+    // Administrativo / Superintendencias
+    if (id == 'admin_super') {
+      return [
+        'Folio / Reclamo SERNAC',
+        'Folio SUSESO / COMPIN',
+        'Expediente Superintendencia de Salud / CMF',
+        'Expediente Sumario SEREMI',
+        'Libre / Personalizado',
+      ];
+    }
+
     return [
       'Rol C (Civil - Ordinario, Ejecutivo, Sumario)',
       'RIT O (Ordinario)',
@@ -1398,14 +1504,16 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
   void _updateActuacionesList() {
     final materiaId = _selectedMateria?.id ?? '';
     final disponibles = LegalDatabase.actuaciones.where((a) {
-      if (materiaId == 'mix_lab') return a.materiaId.startsWith('mix_lab');
-      if (materiaId == 'priv_civ') return a.materiaId.startsWith('priv_civ');
+      if (materiaId == 'mix_lab') return a.materiaId == 'mix_lab';
+      if (materiaId == 'priv_civ') return a.materiaId == 'priv_civ';
       if (materiaId == 'priv_civ_arriendo') return a.materiaId == 'priv_civ_arriendo';
-      if (materiaId == 'mix_fam') return a.materiaId.startsWith('mix_fam');
+      if (materiaId == 'mix_fam') return a.materiaId == 'mix_fam';
       if (materiaId == 'pub_penal') return a.materiaId == 'pub_penal';
       if (materiaId == 'pub_trib') return a.materiaId == 'pub_trib';
       if (materiaId == 'mix_pol_loc') return a.materiaId == 'mix_pol_loc';
-      if (materiaId == 'pub_const') return a.materiaId.startsWith('pub_const') || a.materiaId.startsWith('pub_tc') || a.materiaId.startsWith('admin');
+      if (materiaId == 'pub_const') return a.materiaId == 'pub_const';
+      if (materiaId == 'concurso_tgr') return a.materiaId == 'concurso_tgr';
+      if (materiaId == 'admin_super') return a.materiaId == 'admin_super';
       return a.materiaId == materiaId;
     }).toList();
 
