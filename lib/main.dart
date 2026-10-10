@@ -287,237 +287,409 @@ class LegalDatabase {
     ),
 
     // ==========================================
-    // 2. DERECHO PROCESAL CIVIL Y ARRENDAMIENTO
+    // 2. DERECHO PROCESAL CIVIL
     // ==========================================
     ActuacionProcesal(
-      id: 'civ_dilatorias', materiaId: 'priv_civ_ord',
+      id: 'civ_demanda_ord', materiaId: 'priv_civ',
+      nombreActuacion: 'Demanda Ordinaria Civil', rolProcesal: 'Demandante',
+      tipoInstitucion: 'Juicio Ordinario Civil', articuloYNorma: 'Art. 253 y ss. Código de Procedimiento Civil (CPC)',
+      diasBase: 18, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: true,
+      elementosAConsiderar: ['Cumplimiento de requisitos del Art. 254 CPC', 'Sujeto a emplazamiento y tabla de distancia']
+    ),
+    ActuacionProcesal(
+      id: 'civ_dilatorias', materiaId: 'priv_civ',
       nombreActuacion: 'Oposición de Excepciones Dilatorias', rolProcesal: 'Demandado',
-      tipoInstitucion: 'Incidentes / Objeción de Forma', articuloYNorma: 'Art. 305 CPC',
+      tipoInstitucion: 'Incidentes / Objeción de Forma', articuloYNorma: 'Art. 305 Código de Procedimiento Civil (CPC)',
       diasBase: 8, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: true,
       elementosAConsiderar: ['Deben oponerse todas en un mismo escrito y dentro del término del emplazamiento', 'Suspenden el procedimiento principal']
     ),
     ActuacionProcesal(
-      id: 'civ_contesta', materiaId: 'priv_civ_ord',
-      nombreActuacion: 'Contestación de la Demanda Ordinaria Civil', rolProcesal: 'Demandado',
-      tipoInstitucion: 'Defensa de Fondo / Reconvención', articuloYNorma: 'Art. 258 CPC',
+      id: 'civ_contesta', materiaId: 'priv_civ',
+      nombreActuacion: 'Contestación de la Demanda Ordinaria Civil y Reconvención', rolProcesal: 'Demandado',
+      tipoInstitucion: 'Defensa de Fondo / Reconvención', articuloYNorma: 'Art. 258 y 314 Código de Procedimiento Civil (CPC)',
       diasBase: 18, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: true,
       elementosAConsiderar: ['Aumento por tabla de emplazamiento según distancia', 'Oportunidad para entablar demanda reconvencional']
     ),
     ActuacionProcesal(
-      id: 'civ_replica', materiaId: 'priv_civ_ord',
+      id: 'civ_replica', materiaId: 'priv_civ',
       nombreActuacion: 'Réplica Civil', rolProcesal: 'Demandante',
-      tipoInstitucion: 'Alegación Written', articuloYNorma: 'Art. 311 CPC',
+      tipoInstitucion: 'Alegación Escrita', articuloYNorma: 'Art. 311 Código de Procedimiento Civil (CPC)',
       diasBase: 6, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
       elementosAConsiderar: ['Ampliación o modificación de peticiones sin alterar la acción deducida en la demanda']
     ),
     ActuacionProcesal(
-      id: 'civ_duplica', materiaId: 'priv_civ_ord',
+      id: 'civ_duplica', materiaId: 'priv_civ',
       nombreActuacion: 'Dúplica Civil', rolProcesal: 'Demandado',
-      tipoInstitucion: 'Alegación Written', articuloYNorma: 'Art. 312 CPC',
+      tipoInstitucion: 'Alegación Escrita', articuloYNorma: 'Art. 312 Código de Procedimiento Civil (CPC)',
       diasBase: 6, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Última oportunidad de alegación escrita antes de la fase de prueba o citación a oír sentencia']
+      elementosAConsiderar: ['Última oportunidad de alegación escrita antes de la fase de prueba']
     ),
     ActuacionProcesal(
-      id: 'ejec_opone', materiaId: 'priv_civ_ejec',
+      id: 'ejec_opone', materiaId: 'priv_civ',
       nombreActuacion: 'Oposición a la Ejecución en Juicio Ejecutivo (Excepciones)', rolProcesal: 'Ejecutado',
-      tipoInstitucion: 'Defensa Ejecutiva', articuloYNorma: 'Art. 459 CPC (Ley N° 21.394)',
+      tipoInstitucion: 'Defensa Ejecutiva', articuloYNorma: 'Art. 459 y 464 CPC (Ley N° 21.394)',
       diasBase: 8, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: true,
       elementosAConsiderar: ['Excepciones taxativas del Art. 464 CPC', 'Señalar medios de prueba en el mismo escrito de oposición']
     ),
     ActuacionProcesal(
-      id: 'ejec_replica_excepciones', materiaId: 'priv_civ_ejec',
+      id: 'ejec_replica_excepciones', materiaId: 'priv_civ',
       nombreActuacion: 'Réplica a las Excepciones del Ejecutado', rolProcesal: 'Ejecutante',
       tipoInstitucion: 'Evacuación de Traslado', articuloYNorma: 'Art. 469 CPC',
       diasBase: 4, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
       elementosAConsiderar: ['Contestación a las excepciones opuestas por el ejecutado con citación']
     ),
     ActuacionProcesal(
-      id: 'civ_arriendo_devuelveme', materiaId: 'priv_civ_arriendo',
-      nombreActuacion: 'Demanda de Restitución e Inmueble - Ley Devuélveme Mi Casa (Ley N° 21.461)', rolProcesal: 'Arrendador / Demandante',
-      tipoInstitucion: 'Juicio Especial de Arrendamiento', articuloYNorma: 'Ley N° 18.101 y Ley N° 21.461',
+      id: 'civ_terceria', materiaId: 'priv_civ',
+      nombreActuacion: 'Interposición de Tercería (Dominio, Posesión, Prelación o Pago)', rolProcesal: 'Tercero Afectado',
+      tipoInstitucion: 'Juicio Incidental de Tercería', articuloYNorma: 'Art. 518 y ss. Código de Procedimiento Civil (CPC)',
       diasBase: 10, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Medida cautelar de restitución precautoria por morosidad o consumo de servicios', 'Requerimiento de pago de 10 días']
+      elementosAConsiderar: ['Oposición a los embargos ejecutivos sobre bienes de terceros o preferencia de créditos']
     ),
     ActuacionProcesal(
-      id: 'civ_precario', materiaId: 'priv_civ_arriendo',
-      nombreActuacion: 'Juicio Sumario de Precario (Restitución Inmueble sin Título)', rolProcesal: 'Dueño / Demandante',
-      tipoInstitucion: 'Juicio Sumario Especial', articuloYNorma: 'Art. 2195 inc. 2° Código Civil',
+      id: 'civ_sumario', materiaId: 'priv_civ',
+      nombreActuacion: 'Demanda en Juicio Sumario Civil', rolProcesal: 'Demandante',
+      tipoInstitucion: 'Juicio Sumario Especial', articuloYNorma: 'Art. 680 y ss. Código de Procedimiento Civil (CPC)',
       diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Audiencia de contestación y conciliación al 5° día hábil tras la notificación']
+      elementosAConsiderar: ['Citación a audiencia de contestación y conciliación al 5° día hábil']
     ),
     ActuacionProcesal(
-      id: 'civ_repo', materiaId: 'priv_civ_ord',
-      nombreActuacion: 'Recurso de Reposición (Contra Autos y Decretos)', rolProcesal: 'Agraviado',
-      tipoInstitucion: 'Recurso Ordinario', articuloYNorma: 'Art. 181 CPC',
+      id: 'civ_repo', materiaId: 'priv_civ',
+      nombreActuacion: 'Recurso de Reposición Civil (Contra Autos y Decretos)', rolProcesal: 'Agraviado',
+      tipoInstitucion: 'Recurso Ordinario', articuloYNorma: 'Art. 181 Código de Procedimiento Civil (CPC)',
       diasBase: 3, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Debe interponerse por escrito con fundamentos claros y precisos']
+      elementosAConsiderar: ['Debe interponerse por escrito con fundamentos claros y precisos dentro de 3 días']
     ),
     ActuacionProcesal(
-      id: 'civ_apelacion_def', materiaId: 'priv_civ_ord',
+      id: 'civ_apelacion_def', materiaId: 'priv_civ',
       nombreActuacion: 'Apelación contra Sentencia Definitiva Civil', rolProcesal: 'Agraviado',
-      tipoInstitucion: 'Recurso Ordinario de Alzada', articuloYNorma: 'Art. 189 CPC',
+      tipoInstitucion: 'Recurso Ordinario de Alzada', articuloYNorma: 'Art. 189 Código de Procedimiento Civil (CPC)',
       diasBase: 10, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Fundamentos de hecho y derecho', 'Peticiones concretas exigidas por la Ley N° 20.886 / autos acordados']
+      elementosAConsiderar: ['10 días hábiles desde la notificación de la sentencia definitiva', 'Peticiones concretas exigidas por Ley N° 20.886']
     ),
     ActuacionProcesal(
-      id: 'civ_apelacion_inter', materiaId: 'priv_civ_ord',
+      id: 'civ_apelacion_inter', materiaId: 'priv_civ',
       nombreActuacion: 'Apelación contra Sentencia Interlocutoria Civil', rolProcesal: 'Agraviado',
-      tipoInstitucion: 'Recurso Ordinario de Alzada', articuloYNorma: 'Art. 189 CPC',
+      tipoInstitucion: 'Recurso Ordinario de Alzada', articuloYNorma: 'Art. 189 Código de Procedimiento Civil (CPC)',
       diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Procede contra interlocutorias que pongan término al juicio o hagan imposible su continuación']
+      elementosAConsiderar: ['5 días hábiles contra interlocutorias que pongan término al juicio o hagan imposible su continuación']
     ),
     ActuacionProcesal(
-      id: 'civ_casacion_forma', materiaId: 'priv_civ_ord',
-      nombreActuacion: 'Recurso de Casación en la Forma / Fondo Civil', rolProcesal: 'Agraviado',
-      tipoInstitucion: 'Recurso Extraordinario', articuloYNorma: 'Art. 770 CPC',
+      id: 'civ_casacion_forma', materiaId: 'priv_civ',
+      nombreActuacion: 'Recurso de Casación en la Forma y en el Fondo Civil', rolProcesal: 'Agraviado',
+      tipoInstitucion: 'Recurso Extraordinario', articuloYNorma: 'Art. 770 Código de Procedimiento Civil (CPC)',
       diasBase: 15, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Infracción de ley con influencia sustancial en lo dispositivo de la sentencia', 'Patrocinio especial Corte Suprema']
+      elementosAConsiderar: ['15 días hábiles desde la notificación del fallo de segunda instancia', 'Infracción de ley con influencia sustancial']
+    ),
+    ActuacionProcesal(
+      id: 'civ_queja', materiaId: 'priv_civ',
+      nombreActuacion: 'Recurso de Queja Civil (Falta o Abuso Grave)', rolProcesal: 'Parte Agraviada',
+      tipoInstitucion: 'Recurso Disciplinario Extraordinario', articuloYNorma: 'Art. 545 del Código Orgánico de Tribunales (COT)',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['5 días hábiles ampliables por tabla de emplazamiento contra sentencias que no admiten otros recursos']
     ),
 
     // ==========================================
-    // 3. DERECHO DE FAMILIA
+    // 3. ARRENDAMIENTO Y PRECARIO
     // ==========================================
     ActuacionProcesal(
-      id: 'fam_alimentos_contesta', materiaId: 'mix_fam_alimentos',
-      nombreActuacion: 'Contestación Demanda de Alimentos (Fijación, Aumento, Rebaja o Cese)', rolProcesal: 'Demandado / Alimentante',
-      tipoInstitucion: 'Procedimiento de Alimentos', articuloYNorma: 'Ley N° 14.908 y Art. 59 Ley N° 19.968',
-      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Por escrito hasta 5 días antes de la audiencia preparatoria con liquidación y liquidaciones de sueldo']
+      id: 'civ_arriendo_desahucio', materiaId: 'priv_civ_arriendo',
+      nombreActuacion: 'Demanda de Desahucio y Restitución por Arrendamiento', rolProcesal: 'Arrendador / Demandante',
+      tipoInstitucion: 'Juicio Especial de Arrendamiento', articuloYNorma: 'Ley N° 18.101',
+      diasBase: 10, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Desahucio judicial o contractual con plazos de restitución de 2 meses aumentados 1 mes por cada año']
     ),
     ActuacionProcesal(
-      id: 'fam_cuidado_personal', materiaId: 'mix_fam_cuidado_divorcio',
-      nombreActuacion: 'Demanda de Cuidado Personal / Tuición de Hijos', rolProcesal: 'Padre / Madre Demandante',
+      id: 'civ_arriendo_devuelveme', materiaId: 'priv_civ_arriendo',
+      nombreActuacion: 'Demanda Monitoria de Arrendamiento - Ley Devuélveme Mi Casa', rolProcesal: 'Arrendador / Demandante',
+      tipoInstitucion: 'Juicio Monitorio de Arrendamiento', articuloYNorma: 'Ley N° 21.461 y Ley N° 18.101',
+      diasBase: 10, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Requerimiento de pago de 10 días bajo apercibimiento de lanzamiento y restitución anticipada']
+    ),
+    ActuacionProcesal(
+      id: 'civ_precario', materiaId: 'priv_civ_arriendo',
+      nombreActuacion: 'Juicio Sumario de Precario (Ocupación sin Título)', rolProcesal: 'Dueño / Demandante',
+      tipoInstitucion: 'Juicio Sumario Especial', articuloYNorma: 'Art. 2195 inc. 2° Código Civil',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Acreditar dominio de la propiedad y ocupación por mera tolerancia o ignorancia sin contrato']
+    ),
+    ActuacionProcesal(
+      id: 'civ_arriendo_contesta', materiaId: 'priv_civ_arriendo',
+      nombreActuacion: 'Contestación de Demanda de Arrendamiento en Audiencia', rolProcesal: 'Arrendatario / Demandado',
+      tipoInstitucion: 'Defensa en Juicio de Arrendamiento', articuloYNorma: 'Art. 8 Ley N° 18.101',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Oposición de excepciones en la misma audiencia de contestación y conciliación']
+    ),
+
+    // ==========================================
+    // 4. DERECHO DE FAMILIA
+    // ==========================================
+    ActuacionProcesal(
+      id: 'fam_alimentos_demanda', materiaId: 'mix_fam',
+      nombreActuacion: 'Demanda de Pensión de Alimentos (Menores o Mayores)', rolProcesal: 'Alimentario / Demandante',
+      tipoInstitucion: 'Procedimiento de Alimentos de Familia', articuloYNorma: 'Ley N° 14.908 y Ley N° 19.968',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Fijación provisional de alimentos desde la notificación de la demanda', 'Acompañar certificados de gastos y antecedentes']
+    ),
+    ActuacionProcesal(
+      id: 'fam_alimentos_modifica', materiaId: 'mix_fam',
+      nombreActuacion: 'Demanda de Aumento, Rebaja o Cese de Alimentos', rolProcesal: 'Demandante',
+      tipoInstitucion: 'Procedimiento de Alimentos', articuloYNorma: 'Art. 6 Ley N° 14.908',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Acreditar cambio sustancial en las facultades del alimentante o necesidades del alimentario']
+    ),
+    ActuacionProcesal(
+      id: 'fam_cumplimiento_alimentos', materiaId: 'mix_fam',
+      nombreActuacion: 'Gestión de Cumplimiento de Alimentos y Registro de Deudores', rolProcesal: 'Acreedor de Alimentos',
+      tipoInstitucion: 'Ejecución de Alimentos', articuloYNorma: 'Ley N° 21.389 y Ley N° 14.908',
+      diasBase: 3, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Retención bancaria, retención de fondos de AFP, arraigo nacional y registro nacional de deudores de pensiones']
+    ),
+    ActuacionProcesal(
+      id: 'fam_cuidado_personal', materiaId: 'mix_fam',
+      nombreActuacion: 'Demanda de Cuidado Personal (Tuición de Hijos)', rolProcesal: 'Padre / Madre Demandante',
       tipoInstitucion: 'Procedimiento Ordinario Familia', articuloYNorma: 'Art. 225 Código Civil y Ley N° 19.968',
       diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Contestación escrita hasta 5 días antes de la audiencia preparatoria; informes psicosociales']
+      elementosAConsiderar: ['Informes psicosociales obligatorios emitidos por el consejero técnico del tribunal']
     ),
     ActuacionProcesal(
-      id: 'fam_relacion_directa', materiaId: 'mix_fam_cuidado_divorcio',
+      id: 'fam_relacion_directa', materiaId: 'mix_fam',
       nombreActuacion: 'Demanda de Relación Directa y Regular (Régimen de Visitas)', rolProcesal: 'Padre / Madre Demandante',
       tipoInstitucion: 'Procedimiento Ordinario Familia', articuloYNorma: 'Art. 229 Código Civil y Ley N° 19.968',
       diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Contestación escrita hasta 5 días antes de la audiencia preparatoria con propuesta de régimen']
+      elementosAConsiderar: ['Establecer un régimen equilibrado que resguarde el interés superior del niño']
     ),
     ActuacionProcesal(
-      id: 'fam_divorcio_compensacion', materiaId: 'mix_fam_cuidado_divorcio',
+      id: 'fam_divorcio_compensacion', materiaId: 'mix_fam',
       nombreActuacion: 'Demanda de Divorcio (Unilateral / Mutuo Acuerdo / Culposo) y Compensación', rolProcesal: 'Cónyuge Demandante',
       tipoInstitucion: 'Juicio de Divorcio', articuloYNorma: 'Ley N° 19.947 (Matrimonio Civil)',
       diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Acreditar cese de convivencia (1 año mutuo acuerdo / 3 años unilateral) o causal de culpa']
+      elementosAConsiderar: ['Acreditar cese de convivencia (1 año mutuo acuerdo / 3 años unilateral)', 'Prestación de compensación económica por menoscabo']
     ),
     ActuacionProcesal(
-      id: 'fam_vif_medidas', materiaId: 'mix_fam_vif_proteccion',
-      nombreActuacion: 'Procedimiento por Violencia Intrafamiliar en Familia (VIF)', rolProcesal: 'Víctima / Denunciante',
+      id: 'fam_vif_medidas', materiaId: 'mix_fam',
+      nombreActuacion: 'Denuncia y Solicitud de Medidas Cautelares por Violencia Intrafamiliar (VIF)', rolProcesal: 'Víctima / Denunciante',
       tipoInstitucion: 'Procedimiento Especial VIF', articuloYNorma: 'Ley N° 20.066 y Ley N° 19.968',
       diasBase: 1, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Medidas cautelares inmediatas (salida del hogar, prohibición de acercamiento, suspensión de visitas)']
+      elementosAConsiderar: ['Medidas cautelares inmediatas de protección (prohibición de acercamiento, salida del hogar común)']
     ),
     ActuacionProcesal(
-      id: 'fam_medida_proteccion', materiaId: 'mix_fam_vif_proteccion',
+      id: 'fam_medida_proteccion', materiaId: 'mix_fam',
       nombreActuacion: 'Medidas de Protección de Niños, Niñas y Adolescentes (NNA)', rolProcesal: 'Oficio / Solicitante',
       tipoInstitucion: 'Protección de NNA', articuloYNorma: 'Art. 71 Ley N° 19.968',
       diasBase: 5, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Audiencia preparatoria urgente dentro de 5 días desde la medida cautelar']
+      elementosAConsiderar: ['Audiencia preparatoria urgente dentro de 5 días ante vulneración grave de derechos de NNA']
     ),
     ActuacionProcesal(
-      id: 'fam_filiacion', materiaId: 'mix_fam_vif_proteccion',
-      nombreActuacion: 'Juicio de Filiación / Impugnación o Reconocimiento de Paternidad', rolProcesal: 'Demandante',
+      id: 'fam_filiacion', materiaId: 'mix_fam',
+      nombreActuacion: 'Juicio de Filiación / Reconocimiento o Impugnación de Paternidad', rolProcesal: 'Demandante',
       tipoInstitucion: 'Procedimiento de Filiación', articuloYNorma: 'Arts. 179 y ss. Código Civil',
       diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
       elementosAConsiderar: ['Prueba biológica de ADN obligatoria decretada por el juez de familia']
     ),
     ActuacionProcesal(
-      id: 'fam_apelacion', materiaId: 'mix_fam_alimentos',
+      id: 'fam_apelacion', materiaId: 'mix_fam',
       nombreActuacion: 'Recurso de Apelación en Juicios de Familia', rolProcesal: 'Agraviado',
       tipoInstitucion: 'Recurso de Alzada de Familia', articuloYNorma: 'Art. 67 Ley N° 19.968',
       diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['5 días hábiles desde la notificación del fallo definitivo de primera instancia']
+      elementosAConsiderar: ['5 días hábiles desde la notificación de la sentencia definitiva de familia']
     ),
 
     // ==========================================
-    // 4. DERECHO PROCESAL PENAL (CPP)
+    // 5. DERECHO PROCESAL PENAL (pub_penal)
     // ==========================================
     ActuacionProcesal(
       id: 'penal_amparo_juez', materiaId: 'pub_penal',
       nombreActuacion: 'Amparo ante el Juez de Garantía', rolProcesal: 'Imputado',
-      tipoInstitucion: 'Acción Cautelar Urgente', articuloYNorma: 'Art. 95 CPP',
+      tipoInstitucion: 'Acción Cautelar Urgente', articuloYNorma: 'Art. 95 Código Procesal Penal (CPP)',
       diasBase: 1, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Privación o perturbación ilegal de libertad personal', 'Cita a audiencia inmediata']
+      elementosAConsiderar: ['Privación o perturbación ilegal de libertad personal o vulneración de derechos en detención']
+    ),
+    ActuacionProcesal(
+      id: 'penal_prision_preventiva', materiaId: 'pub_penal',
+      nombreActuacion: 'Solicitud de Revocación o Modificación de Prisión Preventiva', rolProcesal: 'Imputado / Defensa',
+      tipoInstitucion: 'Revisión de Medidas Cautelares', articuloYNorma: 'Art. 144 Código Procesal Penal (CPP)',
+      diasBase: 0, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Nuevos antecedentes que permitan modificar las circunstancias que fundaron la prisión preventiva']
     ),
     ActuacionProcesal(
       id: 'penal_repo_audiencia', materiaId: 'pub_penal',
       nombreActuacion: 'Reposición Oral en Audiencia Penal', rolProcesal: 'Interviniente',
-      tipoInstitucion: 'Recurso Inmediato', articuloYNorma: 'Art. 362 CPP',
+      tipoInstitucion: 'Recurso Inmediato', articuloYNorma: 'Art. 362 Código Procesal Penal (CPP)',
       diasBase: 0, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
       elementosAConsiderar: ['Se interpone y resuelve de forma verbal e inmediata en la misma audiencia']
     ),
     ActuacionProcesal(
       id: 'penal_apelacion', materiaId: 'pub_penal',
       nombreActuacion: 'Recurso de Apelación Penal', rolProcesal: 'Interviniente',
-      tipoInstitucion: 'Recurso de Alzada Penal', articuloYNorma: 'Art. 366 CPP',
+      tipoInstitucion: 'Recurso de Alzada Penal', articuloYNorma: 'Art. 366 Código Procesal Penal (CPP)',
       diasBase: 5, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Procede contra prisión preventiva, sobreseimiento temporal o definitivo, y taxativas legales']
+      elementosAConsiderar: ['5 días corridos contra prisión preventiva, sobreseimiento temporal o definitivo']
     ),
     ActuacionProcesal(
       id: 'penal_nulidad', materiaId: 'pub_penal',
       nombreActuacion: 'Recurso de Nulidad Penal', rolProcesal: 'Interviniente',
-      tipoInstitucion: 'Recurso Extraordinario Penal', articuloYNorma: 'Art. 372 y 374 CPP',
+      tipoInstitucion: 'Recurso Extraordinario Penal', articuloYNorma: 'Art. 372 y 374 Código Procesal Penal (CPP)',
       diasBase: 10, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Infracción sustancial de derechos y garantías constitucionales durante el juicio oral']
+      elementosAConsiderar: ['10 días corridos desde la notificación del fallo oral o escrito del Tribunal Oral en lo Penal']
+    ),
+    ActuacionProcesal(
+      id: 'penal_queja', materiaId: 'pub_penal',
+      nombreActuacion: 'Recurso de Queja Penal (Falta o Abuso Grave)', rolProcesal: 'Parte Agraviada',
+      tipoInstitucion: 'Recurso Disciplinario Extraordinario', articuloYNorma: 'Art. 545 del Código Orgánico de Tribunales (COT)',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Contra resoluciones de Cortes de Apelaciones penales dictadas con falta o abuso grave']
     ),
 
     // ==========================================
-    // 5. DERECHO TRIBUTARIO Y ADUANERO (TTA / SII)
+    // 6. DERECHO TRIBUTARIO Y ADUANERO (pub_trib)
     // ==========================================
     ActuacionProcesal(
       id: 'trib_reclamo_sii', materiaId: 'pub_trib',
       nombreActuacion: 'Reclamación Tributaria contra Liquidaciones o Giros', rolProcesal: 'Contribuyente',
-      tipoInstitucion: 'Reclamación Jurisdiccional TTA', articuloYNorma: 'Art. 124 Código Tributario (DL 830)',
+      tipoInstitucion: 'Reclamación Jurisdiccional TTA', articuloYNorma: 'Art. 124 Código Tributario (DL N° 830)',
       diasBase: 90, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Plazo general de 90 días hábiles desde la notificación de la liquidación, giro o resolución', 'Opción previa de RAF (Art. 123 bis)']
+      elementosAConsiderar: ['90 días hábiles desde la notificación de la liquidación, giro, pago o resolución del SII', 'Opción previa de RAF']
     ),
     ActuacionProcesal(
       id: 'trib_reposicion_admin', materiaId: 'pub_trib',
-      nombreActuacion: 'Reposición Administrativa Voluntaria (RAV / RAF)', rolProcesal: 'Contribuyente',
+      nombreActuacion: 'Reposición Administrativa Voluntaria (RAV / RAF ante el SII)', rolProcesal: 'Contribuyente',
       tipoInstitucion: 'Gestión Administrativa Previa', articuloYNorma: 'Art. 123 bis Código Tributario',
       diasBase: 15, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Interposición ante el Director Regional del SII dentro de plazo legal']
+      elementosAConsiderar: ['15 días hábiles desde la notificación de la liquidación o giro ante el Director Regional del SII']
+    ),
+    ActuacionProcesal(
+      id: 'trib_avaluo', materiaId: 'pub_trib',
+      nombreActuacion: 'Reclamo de Avalúo Fiscal de Bienes Raíces ante el TTA', rolProcesal: 'Propietario / Contribuyente',
+      tipoInstitucion: 'Reclamación de Catastro y Avalúos', articuloYNorma: 'Ley N° 17.235 sobre Impuesto Territorial',
+      diasBase: 30, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Reclamación contra tasación de bienes raíces ante el Tribunal Tributario y Aduanero']
+    ),
+    ActuacionProcesal(
+      id: 'trib_apelacion', materiaId: 'pub_trib',
+      nombreActuacion: 'Recurso de Apelación contra Sentencia del TTA', rolProcesal: 'Contribuyente / SII',
+      tipoInstitucion: 'Recurso de Alzada Tributario', articuloYNorma: 'Art. 139 del Código Tributario',
+      diasBase: 15, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['15 días hábiles desde la notificación de la sentencia definitiva del Tribunal Tributario y Aduanero ante la Corte de Apelaciones']
     ),
 
     // ==========================================
-    // 6. JUZGADOS DE POLICÍA LOCAL
+    // 7. JUZGADOS DE POLICÍA LOCAL E INSTITUCIONES ADMINISTRATIVAS (mix_pol_loc)
     // ==========================================
     ActuacionProcesal(
       id: 'jpl_transito_querella', materiaId: 'mix_pol_loc',
       nombreActuacion: 'Querella e Infracción por Accidentes de Tránsito (JPL)', rolProcesal: 'Denunciante / Afectado',
       tipoInstitucion: 'Procedimiento de Policía Local', articuloYNorma: 'Ley N° 18.287 y Ley N° 18.290',
       diasBase: 180, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Prescripción de 6 meses desde la ocurrencia del accidente de tránsito']
+      elementosAConsiderar: ['Prescripción de 6 meses desde la ocurrencia del accidente de tránsito para interponer querella infraccional']
     ),
     ActuacionProcesal(
       id: 'jpl_consumidor_demanda', materiaId: 'mix_pol_loc',
-      nombreActuacion: 'Demanda por Ley de Protección de los Derechos de los Consumidores (LPDC)', rolProcesal: 'Consumidor Demandante',
-      tipoInstitucion: 'Procedimiento del Consumidor', articuloYNorma: 'Ley N° 19.496 y Ley N° 18.287',
+      nombreActuacion: 'Demanda por Ley de Protección de los Derechos de los Consumidores (LPDC - JPL)', rolProcesal: 'Consumidor Demandante',
+      tipoInstitucion: 'Procedimiento del Consumidor ante JPL', articuloYNorma: 'Ley N° 19.496 y Ley N° 18.287',
       diasBase: 730, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Prescripción de 2 años desde que cesó la infracción o compra del producto/servicio']
+      elementosAConsiderar: ['Prescripción de 2 años desde que cesó la infracción o compra del producto/servicio defective']
+    ),
+    ActuacionProcesal(
+      id: 'jpl_copropiedad', materiaId: 'mix_pol_loc',
+      nombreActuacion: 'Demanda por Infracciones a la Ley de Copropiedad Inmobiliaria (JPL)', rolProcesal: 'Copropietario / Administrador',
+      tipoInstitucion: 'Procedimiento Copropiedad JPL', articuloYNorma: 'Ley N° 21.442 y Ley N° 18.287',
+      diasBase: 180, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Infracciones al reglamento de copropiedad, ruidos molestos, gastos comunes atrasados en JPL']
     ),
     ActuacionProcesal(
       id: 'jpl_apelacion', materiaId: 'mix_pol_loc',
       nombreActuacion: 'Recurso de Apelación contra Sentencia de Policía Local', rolProcesal: 'Parte Agraviada',
-      tipoInstitucion: 'Recurso de Alzada de Policía Local', articuloYNorma: 'Art. 32 Ley N° 18.287',
+      tipoInstitucion: 'Recurso de Alzada de Policía Local', articuloYNorma: 'Art. 32 de la Ley N° 18.287',
       diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
-      elementosAConsiderar: ['5 días hábiles desde la notificación para apelar ante la Corte de Apelaciones respectiva']
+      elementosAConsiderar: ['5 días hábiles desde la notificación de la sentencia de JPL para apelar ante la Corte de Apelaciones']
+    ),
+    ActuacionProcesal(
+      id: 'admin_sernac', materiaId: 'mix_pol_loc',
+      nombreActuacion: 'Reclamo y Mediación Individual / Colectiva ante el SERNAC', rolProcesal: 'Consumidor',
+      tipoInstitucion: 'Vía Administrativa SERNAC', articuloYNorma: 'Ley N° 19.496 sobre Protección de los Consumidores',
+      diasBase: 10, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Instancia de mediación administrativa voluntaria previa o paralela a la acción jurisdiccional en JPL']
+    ),
+    ActuacionProcesal(
+      id: 'admin_suseso', materiaId: 'mix_pol_loc',
+      nombreActuacion: 'Reclamo por Licencias Médicas Rechazadas o Accidentes (SUSESO / COMPIN)', rolProcesal: 'Trabajador / Afiliado',
+      tipoInstitucion: 'Fiscalización de Seguridad Social', articuloYNorma: 'DFL N° 44 del Ministerio del Trabajo y Ley N° 16.395 (SUSESO)',
+      diasBase: 15, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Reclamo administrativo ante la Superintendencia de Seguridad Social (SUSESO) contra rechazo de COMPIN o Isapre']
+    ),
+    ActuacionProcesal(
+      id: 'admin_superintendencias', materiaId: 'mix_pol_loc',
+      nombreActuacion: 'Reclamos y Denuncias ante Superintendencias (Salud, Pensiones, CMF)', rolProcesal: 'Afiliado / Usuario',
+      tipoInstitucion: 'Vía Administrativa de Fiscalización', articuloYNorma: 'Ley Orgánica de Superintendencias (Super de Salud, SP, CMF)',
+      diasBase: 10, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Reclamos por cobros abusivos de Isapres, AFP, Bancos y compañias aseguradoras ante el órgano regulador']
+    ),
+    ActuacionProcesal(
+      id: 'admin_seremi', materiaId: 'mix_pol_loc',
+      nombreActuacion: 'Recursos y Descargos en Sumarios Sanitarios ante la SEREMI de Salud', rolProcesal: 'Inculpado / Empresa',
+      tipoInstitucion: 'Procedimiento Administrativo Sanitario', articuloYNorma: 'Código Sanitario (DFL N° 725/1967)',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Presentación de descargos dentro de 5 días hábiles administrativos desde la notificación del sumario sanitario']
     ),
 
     // ==========================================
-    // 7. DERECHO CONSTITUCIONAL Y ADMINISTRATIVO
+    // 8. DERECHO CONSTITUCIONAL Y ADMINISTRATIVO (pub_const)
     // ==========================================
     ActuacionProcesal(
       id: 'const_proteccion', materiaId: 'pub_const',
       nombreActuacion: 'Recurso de Protección Constitucional (Primera Instancia)', rolProcesal: 'Recurrente / Afectado',
-      tipoInstitucion: 'Acción Constitucional de Urgencia', articuloYNorma: 'Art. 20 CPR y AA CS',
+      tipoInstitucion: 'Acción Constitucional de Urgencia', articuloYNorma: 'Art. 20 de la Constitución Política (CPR) y Auto Acordado CS',
       diasBase: 30, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
       elementosAConsiderar: ['30 días corridos fatales desde la ejecución del acto u omisión arbitraria/ilegal o conocimiento cierto', 'Solicitar Orden de No Innovar (ONI)']
+    ),
+    ActuacionProcesal(
+      id: 'const_amparo', materiaId: 'pub_const',
+      nombreActuacion: 'Recurso de Amparo / Habeas Corpus Constitucional (Primera Instancia)', rolProcesal: 'Amparado / Recurrente',
+      tipoInstitucion: 'Acción Constitucional de Libertad', articuloYNorma: 'Art. 21 de la Constitución Política (CPR)',
+      diasBase: 0, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Sin plazo fijo de caducidad (interponible mientras subsista la privación, perturbación o amenaza ilegal de libertad)']
+    ),
+    ActuacionProcesal(
+      id: 'const_amparo_economico', materiaId: 'pub_const',
+      nombreActuacion: 'Recurso de Amparo Económico', rolProcesal: 'Afectado',
+      tipoInstitucion: 'Acción Constitucional Económica', articuloYNorma: 'Ley N° 18.971',
+      diasBase: 180, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Plazo de 6 meses desde la infracción a la garantía de la libertad económica y libre iniciativa empresarial']
+    ),
+    ActuacionProcesal(
+      id: 'tc_ina', materiaId: 'pub_const',
+      nombreActuacion: 'Requerimiento de Inaplicabilidad por Inconstitucionalidad (INA ante el TC)', rolProcesal: 'Requeriente (Parte / Juez)',
+      tipoInstitucion: 'Control Concreto de Constitucionalidad', articuloYNorma: 'Art. 93 N° 6 CPR y Ley N° 17.997 (LOC TC)',
+      diasBase: 0, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
+      elementosAConsiderar: ['En cualquier estado de la gestión judicial pendiente ante tribunales ordinarios o especiales', 'Solicitar suspensión del procedimiento']
+    ),
+    ActuacionProcesal(
+      id: 'tc_inc', materiaId: 'pub_const',
+      nombreActuacion: 'Requerimiento de Inconstitucionalidad de Leyes (INC ante el TC)', rolProcesal: 'Órganos Constitucionales / Legitimados',
+      tipoInstitucion: 'Control Abstracto de Constitucionalidad', articuloYNorma: 'Art. 93 N° 7 CPR y Ley N° 17.997 (LOC TC)',
+      diasBase: 0, tipoComputo: TipoComputoDias.corridos, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Declaración de inconstitucionalidad de preceptos legales con efecto general']
+    ),
+    ActuacionProcesal(
+      id: 'admin_ilegalidad_municipal', materiaId: 'pub_const',
+      nombreActuacion: 'Reclamo de Ilegalidad Municipal ante la Corte de Apelaciones', rolProcesal: 'Reclamante / Vecino',
+      tipoInstitucion: 'Contencioso Administrativo Municipal', articuloYNorma: 'Art. 151 de la Ley N° 18.695 (Orgánica Constitucional de Municipalidades)',
+      diasBase: 15, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['15 días hábiles desde la notificación o negativa del alcalde frente al recurso de reposición municipal previo']
+    ),
+    ActuacionProcesal(
+      id: 'admin_reposicion', materiaId: 'pub_const',
+      nombreActuacion: 'Recurso de Reposición y Jerárquico en la Administración del Estado', rolProcesal: 'Interesado',
+      tipoInstitucion: 'Impugnación Administrativa', articuloYNorma: 'Art. 59 de la Ley N° 19.880 sobre Bases de los Procedimientos Administrativos',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
+      elementosAConsiderar: ['5 días hábiles administrativos computados de lunes a viernes excluyendo festivos', 'Apelación jerárquica en subsidio']
+    ),
+    ActuacionProcesal(
+      id: 'admin_cgr', materiaId: 'pub_const',
+      nombreActuacion: 'Reclamo o Solicitud de Dictamen ante la Contraloría General de la República (CGR)', rolProcesal: 'Funcionario / Ciudadano',
+      tipoInstitucion: 'Control de juridicidad administrativa', articuloYNorma: 'Ley N° 10.336 de Organización y Atribuciones de la CGR',
+      diasBase: 30, tipoComputo: TipoComputoDias.habilesAdmin, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Control preventivo y posterior de juridicidad de los actos de la administración pública']
     ),
     ActuacionProcesal(
       id: 'const_amparo', materiaId: 'pub_const',
