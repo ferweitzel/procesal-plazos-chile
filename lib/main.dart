@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 import 'data/history_repository.dart';
+import 'data/holidays_repository.dart';
 import 'domain/enums.dart';
 import 'domain/models.dart';
 import 'services/pdf_service.dart';
@@ -1184,30 +1185,25 @@ class LegalDatabase {
 
 class FeriadosService {
   static List<DateTime> feriadosDinamicos = [];
-  static bool apiOnline = false;
+  static bool apiOnline = true;
 
   static Future<void> inicializarFeriados() async {
     feriadosDinamicos.clear();
-    _cargarFeriadosFallback();
-    apiOnline = false;
-  }
-
-  static void _cargarFeriadosFallback() {
-    feriadosDinamicos.addAll([
-      DateTime(2026, 1, 1), DateTime(2026, 4, 3), DateTime(2026, 4, 4), DateTime(2026, 5, 1),
-      DateTime(2026, 5, 21), DateTime(2026, 6, 20), DateTime(2026, 6, 29), DateTime(2026, 7, 16),
-      DateTime(2026, 8, 15), DateTime(2026, 9, 18), DateTime(2026, 9, 19), DateTime(2026, 10, 12),
-      DateTime(2026, 10, 31), DateTime(2026, 11, 1), DateTime(2026, 12, 8), DateTime(2026, 12, 25),
-      DateTime(2027, 1, 1), DateTime(2027, 3, 26), DateTime(2027, 3, 27), DateTime(2027, 5, 1),
-      DateTime(2027, 5, 21), DateTime(2027, 6, 20), DateTime(2027, 6, 28), DateTime(2027, 7, 16),
-      DateTime(2027, 8, 15), DateTime(2027, 9, 17), DateTime(2027, 9, 18), DateTime(2027, 9, 19),
-      DateTime(2027, 10, 11), DateTime(2027, 10, 31), DateTime(2027, 11, 1), DateTime(2027, 12, 8),
-      DateTime(2027, 12, 25)
-    ]);
+    final currentYear = DateTime.now().year;
+    for (int y = currentYear - 2; y <= currentYear + 5; y++) {
+      final list = ChileHolidaysEngine.getHolidaysForYear(y);
+      for (var h in list) {
+        if (!feriadosDinamicos.any((f) => f.year == h.date.year && f.month == h.date.month && f.day == h.date.day)) {
+          feriadosDinamicos.add(h.date);
+        }
+      }
+    }
+    apiOnline = true;
   }
 
   static bool esFeriado(DateTime date) {
-    return feriadosDinamicos.any((f) => f.year == date.year && f.month == date.month && f.day == date.day);
+    final list = ChileHolidaysEngine.getHolidaysForYear(date.year);
+    return list.any((h) => h.date.year == date.year && h.date.month == date.month && h.date.day == date.day);
   }
 }
 
