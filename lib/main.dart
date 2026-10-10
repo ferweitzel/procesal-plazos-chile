@@ -1,6 +1,5 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
@@ -10,7 +9,9 @@ import 'domain/enums.dart';
 import 'domain/models.dart';
 import 'services/pdf_service.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('es', null);
   runApp(const PlazosProcesalesApp());
 }
 
@@ -1405,6 +1406,7 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
   }
 
   bool _calculado = false;
+  bool _registrandoCalculo = false;
   DateTime? _fechaVencimientoFinal;
   CalculationRecord? _ultimoRegistro;
   List<CalculationRecord> _historial = [];
@@ -1424,12 +1426,16 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
   }
 
   Future<void> _initData() async {
-    await FeriadosService.inicializarFeriados();
     List<CalculationRecord> historialCargado = [];
+    Object? errorCarga;
     try {
+      await FeriadosService.inicializarFeriados();
       historialCargado = await _historyRepo.getHistory();
-    } catch (_) {}
+    } catch (error) {
+      errorCarga = error;
+    }
 
+    if (!mounted) return;
     setState(() {
       _selectedMateria = LegalDatabase.materias.isNotEmpty ? LegalDatabase.materias.first : null;
       _updateActuacionesList();
@@ -1438,6 +1444,11 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
       _historial = historialCargado;
       _cargandoFeriados = false;
     });
+    if (errorCarga != null && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('No se pudo cargar el historial guardado: $errorCarga')),
+      );
+    }
   }
 
   void _onMateriaChanged(MateriaSubmateria? nuevaMateria) {
@@ -1655,9 +1666,10 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
     );
   }
 
-  void _ejecutarCalculo() async {
+  Future<void> _ejecutarCalculo() async {
     if (_selectedActuacion == null) return;
 
+    setState(() => _registrandoCalculo = true);
     int diasAumento = (_selectedActuacion!.admiteEmplazamiento && _selectedTribunal != null)
         ? _selectedTribunal!.diasAumentoEmplazamiento : 0;
 
@@ -1692,7 +1704,9 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
       tipoLetra: _tipoLetra,
       numeroCausa: _numeroCausaController.text,
       anioCausa: _anioCausaController.text,
-      tribunal: _selectedTribunal != null ? '${_selectedTribunal!.nombre} - ${_selectedTribunal!.comuna}' : 'No especificado',
+      tribunal: _selectedTribunal != null
+          ? '${_selectedTribunal!.nombre} - ${_selectedTribunal!.comuna} (${_selectedTribunal!.region})'
+          : 'No especificado',
       materiaNombre: _selectedMateria?.displayName ?? '',
       actuacionNombre: _selectedActuacion!.nombreActuacion,
       articuloNorma: _selectedActuacion!.articuloYNorma,
@@ -1700,21 +1714,58 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
       elementosConsiderar: _selectedActuacion!.elementosAConsiderar,
     );
 
+    if (!mounted) return;
+    setState(() {
+      _fechaVencimientoFinal = resultado;
+      _ultimoRegistro = nuevoRegistro;
+      _calculado = true;
+    });
+
     try {
       await _historyRepo.saveRecord(nuevoRegistro);
-      final historialActualizado = await _historyRepo.getHistory();
+      if (!mounted) return;
       setState(() {
-        _fechaVencimientoFinal = resultado;
-        _ultimoRegistro = nuevoRegistro;
-        _historial = historialActualizado;
-        _calculado = true;
+        _historial = [nuevoRegistro, ..._historial].take(100).toList();
       });
-    } catch (_) {
-      setState(() {
-        _fechaVencimientoFinal = resultado;
-        _ultimoRegistro = nuevoRegistro;
-        _calculado = true;
-      });
+    } catch (error) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('El cálculo se realizó, pero no se pudo guardar en el historial local: $error')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _registrandoCalculo = false);
+    }
+  }
+
+  Future<void> _descargarPdfConsulta(CalculationRecord record) async {
+    await _descargarPdf(
+      () => PdfService.downloadSingleCalculationPdf(record),
+      'Comprobante PDF descargado.',
+    );
+  }
+
+  Future<void> _descargarPdfHistorial() async {
+    await _descargarPdf(
+      () => PdfService.downloadHistoryTablePdf(_historial),
+      'Historial PDF descargado.',
+    );
+  }
+
+  Future<void> _descargarPdf(Future<bool> Function() descarga, String mensajeExito) async {
+    try {
+      final descargado = await descarga();
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(descargado ? mensajeExito : 'No fue posible guardar el PDF.'),
+        ),
+      );
+    } catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('No se pudo generar o guardar el PDF: $error')),
+      );
     }
   }
 
@@ -1770,7 +1821,6 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
     }
 
     final actuacionesFiltradas = LegalDatabase.actuaciones.where((a) => a.materiaId == _selectedMateria?.id).toList();
-    final opcionesLetrasActuales = _obtenerOpcionesTiposLetraParaMateria(_selectedMateria);
 
     return Scaffold(
       appBar: AppBar(
@@ -2052,9 +2102,18 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                             foregroundColor: Colors.black,
                             elevation: 4,
                           ),
-                          onPressed: _ejecutarCalculo,
-                          icon: const Icon(Icons.calculate, size: 22),
-                          label: const Text('CALCULAR Y REGISTRAR PLAZO LEGAL', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                          onPressed: _registrandoCalculo ? null : _ejecutarCalculo,
+                          icon: _registrandoCalculo
+                              ? const SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(strokeWidth: 2, color: Colors.black),
+                                )
+                              : const Icon(Icons.calculate, size: 22),
+                          label: Text(
+                            _registrandoCalculo ? 'GUARDANDO CÁLCULO...' : 'CALCULAR Y REGISTRAR PLAZO LEGAL',
+                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
                         ),
                       ),
 
@@ -2088,9 +2147,9 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                                       backgroundColor: const Color(0xFF00FF66),
                                       foregroundColor: Colors.black,
                                     ),
-                                    onPressed: () => PdfService.previewOrPrintSinglePdf(_ultimoRegistro!),
+                                    onPressed: () => _descargarPdfConsulta(_ultimoRegistro!),
                                     icon: const Icon(Icons.picture_as_pdf, size: 16),
-                                    label: const Text('GENERAR PDF', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                    label: const Text('DESCARGAR PDF', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                                   ),
                                 ],
                               ),
@@ -2175,31 +2234,27 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            children: [
-                              const Icon(Icons.table_chart, color: Color(0xFF00FF66)),
-                              const SizedBox(width: 10),
-                              Text(
-                                'Historial Persistente de Consultas Realizadas (${_historial.length})',
-                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF00FF66)),
-                              ),
-                            ],
+                          Text(
+                            'Historial Persistente de Consultas Realizadas (${_historial.length})',
+                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF00FF66)),
                           ),
-                          Wrap(
-                            spacing: 10,
-                            children: [
-                              if (_historial.isNotEmpty) ...[
+                          if (_historial.isNotEmpty) ...[
+                            const SizedBox(height: 12),
+                            Wrap(
+                              spacing: 10,
+                              runSpacing: 8,
+                              children: [
                                 ElevatedButton.icon(
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xFF1A365D),
                                     foregroundColor: Colors.white,
                                   ),
-                                  onPressed: () => PdfService.previewOrPrintHistoryTablePdf(_historial),
+                                  onPressed: _descargarPdfHistorial,
                                   icon: const Icon(Icons.picture_as_pdf, size: 16),
-                                  label: const Text('EXPORTAR TABLA A PDF'),
+                                  label: const Text('DESCARGAR HISTORIAL PDF'),
                                 ),
                                 OutlinedButton.icon(
                                   style: OutlinedButton.styleFrom(
@@ -2211,8 +2266,8 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                                   label: const Text('Limpiar Historial'),
                                 ),
                               ],
-                            ],
-                          ),
+                            ),
+                          ],
                         ],
                       ),
                       const Divider(color: Color(0xFF2E3848), height: 25),
@@ -2228,9 +2283,13 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                           ),
                         ),
                       ] else ...[
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: DataTable(
+                        LayoutBuilder(
+                          builder: (context, constraints) {
+                            return SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                                child: DataTable(
                             headingRowColor: WidgetStateProperty.all(const Color(0xFF1C222D)),
                             columns: const [
                               DataColumn(label: Text('N°', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF00FF66)))),
@@ -2245,9 +2304,9 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                             ],
                             rows: List<DataRow>.generate(_historial.length, (index) {
                               final record = _historial[index];
-                              final fechaFormat = DateFormat('dd/MM/yyyy HH:mm', 'es');
-                              final notiFormat = DateFormat('dd/MM/yyyy', 'es');
-                              final vencFormat = DateFormat('dd/MM/yyyy', 'es');
+                              final fechaFormat = DateFormat('dd/MM/yyyy HH:mm');
+                              final notiFormat = DateFormat('dd/MM/yyyy');
+                              final vencFormat = DateFormat('dd/MM/yyyy');
 
                               return DataRow(
                                 cells: [
@@ -2265,8 +2324,8 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                                       children: [
                                         IconButton(
                                           icon: const Icon(Icons.picture_as_pdf, color: Color(0xFF00FF66), size: 18),
-                                          tooltip: 'Exportar PDF de esta consulta',
-                                          onPressed: () => PdfService.previewOrPrintSinglePdf(record),
+                                          tooltip: 'Descargar PDF de esta consulta',
+                                          onPressed: () => _descargarPdfConsulta(record),
                                         ),
                                         IconButton(
                                           icon: const Icon(Icons.delete_outline, color: Colors.redAccent, size: 18),
@@ -2279,7 +2338,10 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                                 ],
                               );
                             }),
-                          ),
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ],
@@ -2294,5 +2356,3 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
   );
 }
 }
-
-

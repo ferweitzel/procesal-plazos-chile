@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -6,12 +7,17 @@ import 'package:printing/printing.dart';
 import '../domain/models.dart';
 
 class PdfService {
-  static final DateFormat _dateFormat = DateFormat('dd/MM/yyyy', 'es');
-  static final DateFormat _dateTimeFormat = DateFormat("dd/MM/yyyy 'a las' HH:mm:ss 'hrs.'", 'es');
-  static final DateFormat _longDateFormat = DateFormat("EEEE d 'de' MMMM 'de' yyyy", 'es');
+  static DateFormat get _dateFormat => DateFormat('dd/MM/yyyy', 'es');
+  static DateFormat get _dateTimeFormat => DateFormat("dd/MM/yyyy 'a las' HH:mm:ss 'hrs.'", 'es');
+  static DateFormat get _longDateFormat => DateFormat("EEEE d 'de' MMMM 'de' yyyy", 'es');
+
+  static Future<void> _ensureLocale() async {
+    await initializeDateFormatting('es', null);
+  }
 
   /// Genera un PDF detallado para un cálculo individual
   static Future<Uint8List> generateSingleCalculationPdf(CalculationRecord record) async {
+    await _ensureLocale();
     final pdf = pw.Document();
 
     final fontBase = pw.Font.helvetica();
@@ -156,7 +162,7 @@ class PdfService {
                       child: pw.Row(
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         children: [
-                          pw.Text('• ', style: pw.TextStyle(font: fontBold, color: primaryColor)),
+                          pw.Text('- ', style: pw.TextStyle(font: fontBold, color: primaryColor)),
                           pw.Expanded(child: pw.Text(elem, style: pw.TextStyle(font: fontBase, fontSize: 9))),
                         ],
                       ),
@@ -187,6 +193,7 @@ class PdfService {
 
   /// Genera un PDF con la tabla completa del historial persistente de consultas
   static Future<Uint8List> generateHistoryTablePdf(List<CalculationRecord> records) async {
+    await _ensureLocale();
     final pdf = pw.Document();
 
     final fontBase = pw.Font.helvetica();
@@ -276,22 +283,27 @@ class PdfService {
     return pdf.save();
   }
 
-  /// Muestra la vista previa / diálogo de impresión / guardado para un PDF individual
-  static Future<void> previewOrPrintSinglePdf(CalculationRecord record) async {
+  /// Descarga el comprobante individual en web y comparte el PDF en plataformas móviles.
+  static Future<bool> downloadSingleCalculationPdf(CalculationRecord record) async {
     final pdfBytes = await generateSingleCalculationPdf(record);
-    await Printing.layoutPdf(
-      onLayout: (PdfPageFormat format) async => pdfBytes,
-      name: 'Plazo_Procesal_${record.rolRuc ?? record.id}.pdf',
+    return Printing.sharePdf(
+      bytes: pdfBytes,
+      filename: 'Plazo_Procesal_${_safeFilename(record.rolRuc ?? record.id)}.pdf',
     );
   }
 
-  /// Muestra la vista previa / impresión del informe en tabla de historial
-  static Future<void> previewOrPrintHistoryTablePdf(List<CalculationRecord> records) async {
+  /// Descarga el historial en web y comparte el PDF en plataformas móviles.
+  static Future<bool> downloadHistoryTablePdf(List<CalculationRecord> records) async {
     final pdfBytes = await generateHistoryTablePdf(records);
-    await Printing.layoutPdf(
-      onLayout: (PdfPageFormat format) async => pdfBytes,
-      name: 'Historial_Plazos_Procesales_${DateFormat('yyyyMMdd').format(DateTime.now())}.pdf',
+    return Printing.sharePdf(
+      bytes: pdfBytes,
+      filename: 'Historial_Plazos_Procesales_${DateFormat('yyyyMMdd').format(DateTime.now())}.pdf',
     );
+  }
+
+  static String _safeFilename(String value) {
+    final sanitized = value.replaceAll(RegExp(r'[^a-zA-Z0-9_-]+'), '_').replaceAll(RegExp(r'_+'), '_');
+    return sanitized.replaceAll(RegExp(r'^_|_$'), '');
   }
 
   static pw.TableRow _buildTableRow(pw.Font fontBold, pw.Font fontBase, String label, String value) {

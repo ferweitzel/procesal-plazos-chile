@@ -2,6 +2,8 @@
 
 Aplicación profesional web, móvil y de escritorio desarrollada en Flutter para el cálculo automatizado de plazos procesales en el **Ordenamiento Jurídico Chileno**, contemplando feriados legales actualizados (API Feriados Chile y fallback offline), tabla de aumento por emplazamiento de tribunales nacionales, identificación de causas por tipo de letras, persistencia de historial de consultas y exportación de comprobantes e informes en formato **PDF**.
 
+Cada cálculo se muestra en pantalla y se guarda en el historial local del navegador. Desde el resultado o desde cada fila del historial se puede descargar un comprobante PDF con los datos de causa, tribunal, materia, actuación, fundamento normativo, cómputo, vencimiento y checklist; también se puede descargar el resumen del historial.
+
 ---
 
 ## 🏛️ Cobertura Integral del Ecosistema Jurídico Chileno
