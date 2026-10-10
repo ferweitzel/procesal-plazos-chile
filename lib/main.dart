@@ -71,7 +71,7 @@ class MateriaSubmateria {
   final String normativa;
 
   MateriaSubmateria({required this.id, required this.granGrupo, required this.rama, required this.submateria, required this.normativa});
-  String get displayName => '[$granGrupo] $rama - $submateria\n($normativa)';
+  String get displayName => '$granGrupo [Sede: $rama]';
 }
 
 class ActuacionProcesal {
@@ -111,116 +111,61 @@ class TribunalItem {
 
 class LegalDatabase {
   static final List<MateriaSubmateria> materias = [
-    // a. DERECHO LABORAL Y PREVISIONAL
     MateriaSubmateria(
-      id: 'mix_lab_despido',
-      granGrupo: 'a. Derecho Laboral y Previsional',
-      rama: 'Despido e Indemnizaciones (Código del Trabajo)',
-      submateria: 'Despido Injustificado, Indebido, Improcedente y Ley Bustos (Nulidad del Despido por Cotizaciones)',
-      normativa: 'Arts. 162, 168 y 446 del Código del Trabajo (CT)',
+      id: 'mix_lab',
+      granGrupo: '1. Derecho Laboral y Previsional',
+      rama: 'Juzgados de Letras del Trabajo',
+      submateria: 'Despido, Tutela y Cobranza',
+      normativa: 'Código del Trabajo (CT)',
     ),
     MateriaSubmateria(
-      id: 'mix_lab_tutela',
-      granGrupo: 'a. Derecho Laboral y Previsional',
-      rama: 'Tutela Laboral y Derechos Fundamentales',
-      submateria: 'Vulneración de Derechos Fundamentales durante la Relación Laboral o con Ocasión del Despido',
-      normativa: 'Arts. 485 a 495 del Código del Trabajo (CT)',
-    ),
-    MateriaSubmateria(
-      id: 'mix_lab_monitorio_ejec',
-      granGrupo: 'a. Derecho Laboral y Previsional',
-      rama: 'Procedimiento Monitorio y Cobranza Laboral',
-      submateria: 'Reclamos hasta 10 UTM, Cobro de Finiquitos, Títulos Ejecutivos y Multas Dirección del Trabajo',
-      normativa: 'Arts. 463, 496 y 503 del Código del Trabajo y Ley N° 20.022',
-    ),
-
-    // b. DERECHO PROCESAL CIVIL Y ARRENDAMIENTO
-    MateriaSubmateria(
-      id: 'priv_civ_ord',
-      granGrupo: 'b. Derecho Procesal Civil',
-      rama: 'Juicio Ordinario y Sumario Civil',
-      submateria: 'Demanda, Contestación, Excepciones, Réplica, Dúplica y Recursos Civiles',
-      normativa: 'Código de Procedimiento Civil (CPC) - Arts. 253 y ss.',
-    ),
-    MateriaSubmateria(
-      id: 'priv_civ_ejec',
-      granGrupo: 'b. Derecho Procesal Civil',
-      rama: 'Juicio Ejecutivo y Embargos',
-      submateria: 'Mandamiento de Ejecución, Oposición de Excepciones y Réplica Ejecutiva',
-      normativa: 'Código de Procedimiento Civil (CPC) - Arts. 434 a 529',
+      id: 'priv_civ',
+      granGrupo: '2. Derecho Procesal Civil',
+      rama: 'Juzgados de Letras en lo Civil',
+      submateria: 'Juicios Ordinarios y Ejecutivos',
+      normativa: 'Código de Procedimiento Civil (CPC)',
     ),
     MateriaSubmateria(
       id: 'priv_civ_arriendo',
-      granGrupo: 'b. Derecho Procesal Civil',
-      rama: 'Arrendamiento de Predios Urbanos y Precario',
-      submateria: 'Ley Devuélveme Mi Casa (Ley N° 21.461 y N° 18.101), Cobro de Rentas y Precario',
-      normativa: 'Ley N° 18.101, Ley N° 21.461 y Art. 2195 Código Civil',
-    ),
-
-    // c. DERECHO DE FAMILIA
-    MateriaSubmateria(
-      id: 'mix_fam_alimentos',
-      granGrupo: 'c. Derecho de Familia',
-      rama: 'Pensión de Alimentos y Cumplimiento',
-      submateria: 'Fijación, Aumento, Rebaja, Cese de Alimentos y Registro de Deudores',
-      normativa: 'Ley N° 14.908, Ley N° 21.389 y Ley N° 19.968',
+      granGrupo: '3. Arrendamiento y Precario',
+      rama: 'Juzgados Civiles / Letras',
+      submateria: 'Ley Devuélveme Mi Casa (Ley N° 21.461)',
+      normativa: 'Ley N° 21.461 y N° 18.101',
     ),
     MateriaSubmateria(
-      id: 'mix_fam_cuidado_divorcio',
-      granGrupo: 'c. Derecho de Familia',
-      rama: 'Cuidado Personal, Visitas, Divorcio y Compensación',
-      submateria: 'Tuición, Relación Directa y Regular, Divorcio Unilateral/Mutuo Acuerdo y Compensación Económica',
-      normativa: 'Ley N° 19.947 (Matrimonio Civil) y Código Civil',
+      id: 'mix_fam',
+      granGrupo: '4. Derecho de Familia',
+      rama: 'Tribunales de Familia',
+      submateria: 'Alimentos, Tuición, Divorcio y VIF',
+      normativa: 'Ley N° 19.968 y Ley N° 14.908',
     ),
-    MateriaSubmateria(
-      id: 'mix_fam_vif_proteccion',
-      granGrupo: 'c. Derecho de Familia',
-      rama: 'Violencia Intrafamiliar, Protección NNA y Filiación',
-      submateria: 'Medidas Cautelares VIF, Medidas de Protección NNA y Juicios de Paternidad/Filiación',
-      normativa: 'Ley N° 20.066, Ley N° 19.968 y Arts. 179 y ss. CC',
-    ),
-
-    // d. DERECHO PROCESAL PENAL
     MateriaSubmateria(
       id: 'pub_penal',
-      granGrupo: 'd. Derecho Procesal Penal',
-      rama: 'Procedimiento Penal y Recursos',
-      submateria: 'Juicio Oral, Garantía, Procedimiento Simplificado, Abreviado, Amparo y Nulidad Penal',
-      normativa: 'Código Procesal Penal (CPP) - Arts. 95, 366, 372',
+      granGrupo: '5. Derecho Procesal Penal',
+      rama: 'Juzgados de Garantía y TOP',
+      submateria: 'Juicio Oral, Amparo y Nulidad Penal',
+      normativa: 'Código Procesal Penal (CPP)',
     ),
-
-    // e. DERECHO TRIBUTARIO Y ADUANERO
     MateriaSubmateria(
       id: 'pub_trib',
-      granGrupo: 'e. Derecho Tributario y Aduanero',
-      rama: 'Reclamaciones TTA y SII',
-      submateria: 'Reclamación Tributaria contra Liquidaciones o Giros (SII/TTA) y Reposición RAF/RAV',
-      normativa: 'Código Tributario (DL N° 830) y Ordenanza de Aduanas',
+      granGrupo: '6. Derecho Tributario y Aduanero',
+      rama: 'Tribunales Tributarios y Aduaneros (TTA)',
+      submateria: 'Reclamación contra Liquidaciones y Giros (SII)',
+      normativa: 'Código Tributario (DL N° 830)',
     ),
-
-    // f. JUZGADOS DE POLICÍA LOCAL
     MateriaSubmateria(
       id: 'mix_pol_loc',
-      granGrupo: 'f. Juzgados de Policía Local',
-      rama: 'Tránsito, Consumidor y Copropiedad Inmobiliaria',
-      submateria: 'Infracciones y Accidentes de Tránsito, Ley del Consumidor (LPDC) y Ley de Copropiedad',
-      normativa: 'Ley N° 18.287 (JPL), Ley N° 18.290, Ley N° 19.496 y Ley N° 21.442',
+      granGrupo: '7. Juzgados de Policía Local (JPL)',
+      rama: 'Juzgados de Policía Local (Municipalidades)',
+      submateria: 'Tránsito, Consumidor y Copropiedad',
+      normativa: 'Ley N° 18.287 y Ley N° 19.496',
     ),
-
-    // g. DERECHO CONSTITUCIONAL Y ADMINISTRATIVO
     MateriaSubmateria(
       id: 'pub_const',
-      granGrupo: 'g. Derecho Constitucional y Administrativo',
-      rama: 'Acciones Constitucionales y Procedimiento Administrativo',
-      submateria: 'Recurso de Protección, Amparo, Reclamo de Ilegalidad y Recursos Ley 19.880',
-      normativa: 'Constitución Política (Arts. 20, 21), Ley N° 19.880 y Ley N° 18.695',
-    ),
-    MateriaSubmateria(
-      id: 'pub_tc',
-      granGrupo: 'g. Derecho Constitucional y Administrativo',
-      rama: 'Justicia Constitucional (TC)',
-      submateria: 'Inaplicabilidad e Inconstitucionalidad de Leyes ante el Tribunal Constitucional',
-      normativa: 'Constitución (Art. 93) y Ley N° 17.997 (LOC TC)',
+      granGrupo: '8. Derecho Constitucional y Administrativo',
+      rama: 'Cortes de Apelaciones, Suprema y TC',
+      submateria: 'Recursos de Protección, Amparo, INA y Ley 19.880',
+      normativa: 'Constitución Política y Ley N° 19.880',
     ),
   ];
 
@@ -1237,7 +1182,19 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
   }
 
   void _updateActuacionesList() {
-    final disponibles = LegalDatabase.actuaciones.where((a) => a.materiaId == _selectedMateria?.id).toList();
+    final materiaId = _selectedMateria?.id ?? '';
+    final disponibles = LegalDatabase.actuaciones.where((a) {
+      if (materiaId == 'mix_lab') return a.materiaId.startsWith('mix_lab');
+      if (materiaId == 'priv_civ') return a.materiaId.startsWith('priv_civ');
+      if (materiaId == 'priv_civ_arriendo') return a.materiaId == 'priv_civ_arriendo';
+      if (materiaId == 'mix_fam') return a.materiaId.startsWith('mix_fam');
+      if (materiaId == 'pub_penal') return a.materiaId == 'pub_penal';
+      if (materiaId == 'pub_trib') return a.materiaId == 'pub_trib';
+      if (materiaId == 'mix_pol_loc') return a.materiaId == 'mix_pol_loc';
+      if (materiaId == 'pub_const') return a.materiaId.startsWith('pub_const') || a.materiaId.startsWith('pub_tc') || a.materiaId.startsWith('admin');
+      return a.materiaId == materiaId;
+    }).toList();
+
     _selectedActuacion = disponibles.isNotEmpty ? disponibles.first : null;
     _calculado = false;
   }
