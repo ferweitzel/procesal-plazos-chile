@@ -1524,21 +1524,22 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
     final anio = _anioCausaController.text.trim();
     final ruc = _rucController.text.trim();
 
-    if (_tipoLetra.startsWith('RUC')) {
-      return ruc.isNotEmpty ? 'RUC $ruc' : 'RUC Pendiente';
+    if (_tipoLetra.startsWith('RUC') || _tipoLetra.startsWith('Folio') || _tipoLetra.startsWith('Expediente')) {
+      if (ruc.isNotEmpty) return 'RUC/Folio: $ruc';
+      if (num.isNotEmpty) return 'Folio: $num-$anio';
+      return 'RUC / Folio Sin Especificar';
     }
 
     String baseRol = '';
+    final partes = _tipoLetra.split(' ');
+    final letra = partes.length > 1 ? partes[1] : '';
+
     if (_tipoLetra.startsWith('Rol ')) {
-      final partes = _tipoLetra.split(' ');
-      final letra = partes[1];
-      baseRol = num.isNotEmpty ? 'Rol $letra-$num-$anio' : 'Rol $letra-___-$anio';
+      baseRol = num.isNotEmpty ? 'Rol $letra-$num-$anio' : 'Rol $letra (Pendiente)';
     } else if (_tipoLetra.startsWith('RIT ')) {
-      final partes = _tipoLetra.split(' ');
-      final letra = partes[1];
-      baseRol = num.isNotEmpty ? 'RIT $letra-$num-$anio' : 'RIT $letra-___-$anio';
+      baseRol = num.isNotEmpty ? 'RIT $letra-$num-$anio' : 'RIT $letra (Pendiente)';
     } else {
-      baseRol = num.isNotEmpty ? '$num-$anio' : 'Sin Rol Definido';
+      baseRol = num.isNotEmpty ? 'Causa $num-$anio' : _tipoLetra;
     }
 
     if (ruc.isNotEmpty) {
