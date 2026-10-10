@@ -1455,8 +1455,7 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
     setState(() {
       _selectedMateria = LegalDatabase.materias.first;
       _updateActuacionesList();
-      final opciones = _obtenerOpcionesTiposLetraParaMateria(_selectedMateria);
-      _tipoLetra = opciones.first;
+      _tipoLetra = _determinarTipoLetraParaActuacion(_selectedActuacion);
       _selectedTribunal = LegalDatabase.tribunales.first;
       _historial = historialCargado;
       _cargandoFeriados = false;
@@ -1467,10 +1466,59 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
     setState(() {
       _selectedMateria = nuevaMateria;
       _updateActuacionesList();
-      final opciones = _obtenerOpcionesTiposLetraParaMateria(nuevaMateria);
-      _tipoLetra = opciones.first;
+      _tipoLetra = _determinarTipoLetraParaActuacion(_selectedActuacion);
       _calculado = false;
     });
+  }
+
+  String _determinarTipoLetraParaActuacion(ActuacionProcesal? actuacion) {
+    if (actuacion == null) return 'Rol C (Civil - Ordinario, Ejecutivo, Sumario)';
+    final id = actuacion.id;
+    final materiaId = actuacion.materiaId;
+
+    if (materiaId == 'mix_lab') {
+      if (id.contains('tutela')) return 'RIT T (Tutela Laboral / Derechos Fundamentales)';
+      if (id.contains('monitorio') || id.contains('despido')) return 'RIT O (Ordinario Laboral / Despido)';
+      if (id.contains('cobranza') || id.contains('ejecutivo') || id.contains('opose')) return 'RIT C (Cobranza Laboral / Previsional)';
+      return 'RIT O (Ordinario Laboral / Despido)';
+    }
+    if (materiaId == 'priv_civ') {
+      if (id.contains('ejec') || id.contains('opone')) return 'Rol J (Cobranza / Ejecutivo Especial)';
+      return 'Rol C (Civil - Ordinario, Ejecutivo, Sumario)';
+    }
+    if (materiaId == 'priv_civ_arriendo') return 'Rol C (Civil - Arrendamiento / Precario)';
+    if (materiaId == 'mix_fam') {
+      if (id.contains('alimentos') || id.contains('divorcio')) return 'RIT F (Familia - Alimentos / Divorcio)';
+      if (id.contains('cuidado') || id.contains('relacion')) return 'RIT C (Familia - Cuidado Personal / Visitas)';
+      if (id.contains('proteccion')) return 'RIT M (Familia - Protección NNA)';
+      if (id.contains('vif')) return 'RIT X (Familia - Violencia Intrafamiliar VIF)';
+      if (id.contains('cumplimiento')) return 'RIT Z (Familia - Cumplimiento)';
+      return 'RIT F (Familia - Alimentos / Divorcio)';
+    }
+    if (materiaId == 'pub_penal') {
+      if (id.contains('amparo')) return 'RIT I (Garantía / Investigación Penal)';
+      return 'RIT O (Juicio Oral Penal - TOP)';
+    }
+    if (materiaId == 'pub_trib') return 'RIT T (TTA - Tributario)';
+    if (materiaId == 'mix_pol_loc') return 'Rol JPL (Juzgado de Policía Local)';
+    if (materiaId == 'pub_const') return 'Rol Corte (Recurso de Protección / Amparo)';
+    if (materiaId == 'concurso_tgr') return 'RIT Q (Procedimiento Concursal / Liquidación)';
+    if (materiaId == 'admin_super') return 'Folio / Reclamo SERNAC';
+
+    return 'Rol C (Civil - Ordinario, Ejecutivo, Sumario)';
+  }
+
+  String _obtenerTextoComputo(TipoComputoDias tipo) {
+    switch (tipo) {
+      case TipoComputoDias.habilesCivil:
+        return 'días hábiles judiciales (excluye domingos y festivos)';
+      case TipoComputoDias.habilesAdmin:
+        return 'días hábiles administrativos (excluye sábados, domingos y festivos)';
+      case TipoComputoDias.habilesLaboral:
+        return 'días hábiles laborales (excluye domingos y festivos)';
+      case TipoComputoDias.corridos:
+        return 'días corridos';
+    }
   }
 
   void _updateActuacionesList() {
@@ -1673,15 +1721,22 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
       elementosConsiderar: _selectedActuacion!.elementosAConsiderar,
     );
 
-    await _historyRepo.saveRecord(nuevoRegistro);
-    final historialActualizado = await _historyRepo.getHistory();
-
-    setState(() {
-      _fechaVencimientoFinal = resultado;
-      _ultimoRegistro = nuevoRegistro;
-      _historial = historialActualizado;
-      _calculado = true;
-    });
+    try {
+      await _historyRepo.saveRecord(nuevoRegistro);
+      final historialActualizado = await _historyRepo.getHistory();
+      setState(() {
+        _fechaVencimientoFinal = resultado;
+        _ultimoRegistro = nuevoRegistro;
+        _historial = historialActualizado;
+        _calculado = true;
+      });
+    } catch (_) {
+      setState(() {
+        _fechaVencimientoFinal = resultado;
+        _ultimoRegistro = nuevoRegistro;
+        _calculado = true;
+      });
+    }
   }
 
   void _eliminarRegistroHistorial(String id) async {
@@ -1801,11 +1856,15 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                         isExpanded: true,
                         value: _selectedActuacion,
                         items: actuacionesFiltradas.map((a) => DropdownMenuItem(value: a, child: Text(a.displayName, style: const TextStyle(fontSize: 13)))).toList(),
-                        onChanged: (val) => setState(() { _selectedActuacion = val; _calculado = false; }),
+                        onChanged: (val) => setState(() {
+                          _selectedActuacion = val;
+                          _tipoLetra = _determinarTipoLetraParaActuacion(val);
+                          _calculado = false;
+                        }),
                       ),
                       const SizedBox(height: 20),
 
-                      // SECCIÓN DE IDENTIFICACIÓN DE CAUSA (FILTRADA SEGÚN MATERIA)
+                      // SECCIÓN DE IDENTIFICACIÓN DE CAUSA (ASIGNADA AUTOMÁTICAMENTE POR ACTUACIÓN)
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
@@ -1822,55 +1881,62 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                                 SizedBox(width: 8),
                                 Flexible(
                                   child: Text(
-                                    '3. Identificación de Causa (Letras correspondientes a la Materia):',
+                                    '3. Identificación de Causa (Asignada automáticamente por Actuación):',
                                     style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                                   ),
                                 ),
                               ],
                             ),
                             const SizedBox(height: 12),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF1E2633),
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(color: const Color(0xFF00FF66).withValues(alpha: 0.4)),
+                              ),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.verified, color: Color(0xFF00FF66), size: 18),
+                                  const SizedBox(width: 10),
+                                  const Text('Tipo / Prefijo de Causa: ', style: TextStyle(fontSize: 12, color: Colors.white70)),
+                                  Expanded(
+                                    child: Text(
+                                      _tipoLetra,
+                                      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF00FF66)),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 12),
                             Row(
                               children: [
                                 Expanded(
                                   flex: 3,
-                                  child: DropdownButtonFormField<String>(
-                                    isExpanded: true,
-                                    value: opcionesLetrasActuales.contains(_tipoLetra) ? _tipoLetra : opcionesLetrasActuales.first,
-                                    decoration: const InputDecoration(labelText: 'Tipo de Causa / Letra (Materia Seleccionada)'),
-                                    items: opcionesLetrasActuales.map((l) => DropdownMenuItem(value: l, child: Text(l, style: const TextStyle(fontSize: 12)))).toList(),
-                                    onChanged: (val) {
-                                      if (val != null) setState(() { _tipoLetra = val; _calculado = false; });
-                                    },
+                                  child: TextField(
+                                    controller: _rucController,
+                                    decoration: const InputDecoration(labelText: 'RUC (Opcional)', hintText: 'Ej. 2400123456-7'),
+                                    onChanged: (_) => setState(() => _calculado = false),
                                   ),
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
                                   flex: 2,
                                   child: TextField(
-                                    controller: _rucController,
-                                    decoration: const InputDecoration(labelText: 'RUC (Opcional)', hintText: '2400123456-7'),
-                                    onChanged: (_) => setState(() => _calculado = false),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 12),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: TextField(
                                     controller: _numeroCausaController,
                                     keyboardType: TextInputType.number,
-                                    decoration: const InputDecoration(labelText: 'N° de Causa', hintText: 'Ej. 1234'),
+                                    decoration: const InputDecoration(labelText: 'N° Causa (Opcional)', hintText: 'Ej. 1234'),
                                     onChanged: (_) => setState(() => _calculado = false),
                                   ),
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
+                                  flex: 1,
                                   child: TextField(
                                     controller: _anioCausaController,
                                     keyboardType: TextInputType.number,
-                                    decoration: const InputDecoration(labelText: 'Año Causa', hintText: '2026'),
+                                    decoration: const InputDecoration(labelText: 'Año', hintText: '2026'),
                                     onChanged: (_) => setState(() => _calculado = false),
                                   ),
                                 ),
@@ -1897,57 +1963,50 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                       ),
                       const SizedBox(height: 20),
 
-                      // TRIBUNAL COMPETENTE (MENÚ DESPLEGABLE DIRECTO + MODAL BÚSQUEDA)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Flexible(
-                            child: Text('4. Tribunal Competente (Menú Desplegable Directo):', style: TextStyle(fontWeight: FontWeight.bold)),
-                          ),
-                          TextButton.icon(
-                            style: TextButton.styleFrom(foregroundColor: const Color(0xFF00FF66)),
-                            onPressed: _abrirModalBuscadorTribunales,
-                            icon: const Icon(Icons.search, size: 18),
-                            label: const Text('🔍 Buscar en Catálogo', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-                          ),
-                        ],
-                      ),
+                      // TRIBUNAL COMPETENTE (SELECCIÓN RÁPIDA DESDE CATÁLOGO)
+                      const Text('4. Tribunal Competente:', style: TextStyle(fontWeight: FontWeight.bold)),
                       const SizedBox(height: 8),
-                      DropdownButtonFormField<TribunalItem>(
-                        isExpanded: true,
-                        value: _selectedTribunal,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.account_balance, color: Color(0xFF00FF66)),
-                          labelText: 'Seleccionar Tribunal de Menú Desplegable',
+                      InkWell(
+                        onTap: _abrirModalBuscadorTribunales,
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF131720),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: const Color(0xFF00FF66).withValues(alpha: 0.5)),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.account_balance, color: Color(0xFF00FF66), size: 24),
+                              const SizedBox(width: 14),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      _selectedTribunal != null
+                                          ? '${_selectedTribunal!.nombre} - ${_selectedTribunal!.comuna} (${_selectedTribunal!.region})'
+                                          : 'Seleccionar Tribunal Competente',
+                                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+                                    ),
+                                    if (_selectedTribunal != null && _selectedTribunal!.diasAumentoEmplazamiento > 0)
+                                      Text(
+                                        '⚡ Aumento por emplazamiento: +${_selectedTribunal!.diasAumentoEmplazamiento} días',
+                                        style: const TextStyle(fontSize: 12, color: Colors.amber),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                              const Icon(Icons.search, color: Color(0xFF00FF66)),
+                              const SizedBox(width: 6),
+                              const Text('Buscar Catálogo', style: TextStyle(color: Color(0xFF00FF66), fontWeight: FontWeight.bold, fontSize: 13)),
+                            ],
+                          ),
                         ),
-                        items: LegalDatabase.tribunales.map((t) {
-                          return DropdownMenuItem<TribunalItem>(
-                            value: t,
-                            child: Text(
-                              '${t.nombre} - ${t.comuna} (${t.region}) ${t.diasAumentoEmplazamiento > 0 ? "[+${t.diasAumentoEmplazamiento}d emplazamiento]" : ""}',
-                              style: const TextStyle(fontSize: 13, color: Colors.white),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (val) {
-                          if (val != null) {
-                            setState(() {
-                              _selectedTribunal = val;
-                              _calculado = false;
-                            });
-                          }
-                        },
                       ),
-                      if (_selectedTribunal != null && _selectedTribunal!.diasAumentoEmplazamiento > 0) ...[
-                        const SizedBox(height: 6),
-                        Text(
-                          '⚡ Aumento Tabla de Emplazamiento para ${_selectedTribunal!.comuna}: +${_selectedTribunal!.diasAumentoEmplazamiento} días.',
-                          style: const TextStyle(color: Colors.amber, fontSize: 12, fontWeight: FontWeight.bold),
-                        ),
-                      ],
                       const SizedBox(height: 20),
 
+                      // 5. FECHA DE NOTIFICACIÓN Y NOTA DE PLAZOS
                       Row(
                         children: [
                           Expanded(
@@ -1979,6 +2038,30 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 12),
+                      if (_selectedActuacion != null) ...[
+                        Container(
+                          padding: const EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF1E2633),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: const Color(0xFF00FF66).withValues(alpha: 0.3)),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.info_outline, color: Color(0xFF00FF66), size: 20),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  'Plazo Legal: ${_selectedActuacion!.diasBase} días (${_obtenerTextoComputo(_selectedActuacion!.tipoComputo)}).'
+                                  '${(_selectedTribunal != null && _selectedTribunal!.diasAumentoEmplazamiento > 0 && _selectedActuacion!.admiteEmplazamiento) ? " Incluye +${_selectedTribunal!.diasAumentoEmplazamiento}d por emplazamiento." : ""}',
+                                  style: const TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                       const SizedBox(height: 30),
 
                       SizedBox(
