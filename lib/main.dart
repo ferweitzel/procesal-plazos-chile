@@ -174,74 +174,116 @@ class LegalDatabase {
     // 1. DERECHO LABORAL Y PREVISIONAL
     // ==========================================
     ActuacionProcesal(
-      id: 'lab_despido_injustificado', materiaId: 'mix_lab_despido',
-      nombreActuacion: 'Demanda por Despido Injustificado / Indebido (Art. 168 CT)', rolProcesal: 'Trabajador Demandante',
+      id: 'lab_despido_injustificado', materiaId: 'mix_lab',
+      nombreActuacion: 'Demanda por Despido Injustificado / Indebido', rolProcesal: 'Trabajador Demandante',
       tipoInstitucion: 'Juicio Ordinario Laboral', articuloYNorma: 'Art. 168 y 446 Código del Trabajo',
       diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
       elementosAConsiderar: ['60 días hábiles laborales desde la separación del trabajador', 'Suspensión del plazo por reclamo administrativo ante la Inspección del Trabajo (hasta un máximo de 90 días hábiles)']
     ),
     ActuacionProcesal(
-      id: 'lab_ley_bustos', materiaId: 'mix_lab_despido',
+      id: 'lab_tutela_despido', materiaId: 'mix_lab',
+      nombreActuacion: 'Procedimiento de Tutela Laboral por Vulneración de Derechos Fundamentales con ocasión del despido', rolProcesal: 'Trabajador Demandante',
+      tipoInstitucion: 'Procedimiento de Tutela Laboral', articuloYNorma: 'Art. 485 y ss. del Código del Trabajo',
+      diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Permite reclamar cuando el despido lesiona derechos fundamentales (honra, libertad de expresión, vida privada o discriminación)', 'Se suele interponer en lo principal, interponiendo en subsidio la demanda por despido injustificado']
+    ),
+    ActuacionProcesal(
+      id: 'lab_autodespido', materiaId: 'mix_lab',
+      nombreActuacion: 'Despido Indirecto o Autodespido', rolProcesal: 'Trabajador Demandante',
+      tipoInstitucion: 'Juicio Ordinario Laboral', articuloYNorma: 'Art. 171 del Código del Trabajo',
+      diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Cuando es el trabajador quien pone término al contrato por incumplimiento grave de las obligaciones del empleador', 'Solicita las mismas indemnizaciones que en un despido injustificado (con sus respectivos recargos)']
+    ),
+    ActuacionProcesal(
+      id: 'lab_fuero', materiaId: 'mix_lab',
+      nombreActuacion: 'Demanda de Despido Injustificado de Trabajadores con Fuero o Separación Provisional', rolProcesal: 'Trabajador Demandante / Fuero',
+      tipoInstitucion: 'Juicio Laboral Especial con Fuero', articuloYNorma: 'Art. 174 del Código del Trabajo',
+      diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Acción referida al despido efectuado sin autorización judicial previa respecto de trabajadores protegidos por fuero (maternal, sindical, etc.)']
+    ),
+    ActuacionProcesal(
+      id: 'lab_prestaciones', materiaId: 'mix_lab',
+      nombreActuacion: 'Cobro de Prestaciones e Indemnizaciones Laborales', rolProcesal: 'Trabajador Demandante',
+      tipoInstitucion: 'Juicio Ordinario Laboral', articuloYNorma: 'Art. 446 y ss. del Código del Trabajo',
+      diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Para reclamar el pago de feriado proporcional o legal adeudado, horas extraordinarias, gratificaciones, comisiones, o diferencias de indemnización por años de servicio y aviso previo']
+    ),
+    ActuacionProcesal(
+      id: 'lab_devolucion_afc', materiaId: 'mix_lab',
+      nombreActuacion: 'Devolución del Descuento del Seguro de Cesantía (AFC)', rolProcesal: 'Trabajador Demandante',
+      tipoInstitucion: 'Juicio Ordinario Laboral', articuloYNorma: 'Art. 13 Ley N° 19.728 y Código del Trabajo',
+      diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Impugnación de la imputación o descuento del aporte patronal a la cuenta individual de cesantía efectuado por el empleador cuando la causal imputada es declarada injustificada']
+    ),
+    ActuacionProcesal(
+      id: 'lab_danos_morales', materiaId: 'mix_lab',
+      nombreActuacion: 'Acción de Indemnización por Daños Morales o Perjuicios', rolProcesal: 'Trabajador Demandante',
+      tipoInstitucion: 'Juicio Ordinario Laboral / Responsabilidad Civil', articuloYNorma: 'Arts. 67 y 184 del CT y Código Civil',
+      diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Derivada de la responsabilidad contractual o extracontractual con ocasión de la terminación abusiva de la relación laboral']
+    ),
+    ActuacionProcesal(
+      id: 'lab_monitorio', materiaId: 'mix_lab',
+      nombreActuacion: 'Procedimiento Monitorio Laboral (Cuantía ≤ 15 IMM)', rolProcesal: 'Trabajador Demandante',
+      tipoInstitucion: 'Procedimiento Monitorio Laboral', articuloYNorma: 'Art. 496 a 502 del Código del Trabajo',
+      diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Aplicable para reclamos de despido e indemnizaciones cuya cuantía sea igual o inferior a 15 Ingresos Mínimos Mensuales', 'Requiere reclamo previo ante la Inspección del Trabajo']
+    ),
+    ActuacionProcesal(
+      id: 'lab_ley_bustos', materiaId: 'mix_lab',
       nombreActuacion: 'Acción de Nulidad del Despido / Ley Bustos por Cotizaciones Impagas', rolProcesal: 'Trabajador Demandante',
       tipoInstitucion: 'Nulidad del Despido (Art. 162 CT)', articuloYNorma: 'Art. 162 inc. 5° a 7° Código del Trabajo',
       diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
       elementosAConsiderar: ['Sanción de pago de remuneraciones y cotizaciones desde el despido hasta la convalidación en tribunal', 'Acreditar morosidad o no pago de AFP/Isapre/Fonasa/AFC']
     ),
     ActuacionProcesal(
-      id: 'lab_tutela_despido', materiaId: 'mix_lab_tutela',
-      nombreActuacion: 'Tutela Laboral por Vulneración de Derechos con Ocasión del Despido', rolProcesal: 'Trabajador Demandante',
-      tipoInstitucion: 'Procedimiento de Tutela Laboral', articuloYNorma: 'Art. 485 y 489 Código del Trabajo',
-      diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
-      elementosAConsiderar: ['60 días hábiles laborales desde el despido vulneratorio', 'Opcionalidad de indemnización adicional de 6 a 11 meses de remuneración']
-    ),
-    ActuacionProcesal(
-      id: 'lab_tutela_vigente', materiaId: 'mix_lab_tutela',
-      nombreActuacion: 'Tutela Laboral Durante la Relación Laboral Vigente', rolProcesal: 'Trabajador Demandante',
-      tipoInstitucion: 'Procedimiento de Tutela Laboral', articuloYNorma: 'Art. 485 y 486 Código del Trabajo',
-      diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
-      elementosAConsiderar: ['60 días hábiles laborales desde la vulneración del derecho fundamental en la empresa']
-    ),
-    ActuacionProcesal(
-      id: 'lab_monitorio', materiaId: 'mix_lab_monitorio_ejec',
-      nombreActuacion: 'Demanda Monitoria Laboral (Cuantía ≤ 10 UTM)', rolProcesal: 'Trabajador Demandante',
-      tipoInstitucion: 'Procedimiento Monitorio Laboral', articuloYNorma: 'Art. 496 y ss. Código del Trabajo',
-      diasBase: 60, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
-      elementosAConsiderar: ['Exige reclamo administrativo previo ante la Inspección del Trabajo', 'Resolución inmediata o citación a audiencia única']
-    ),
-    ActuacionProcesal(
-      id: 'lab_contestacion_ord', materiaId: 'mix_lab_despido',
+      id: 'lab_contestacion_ord', materiaId: 'mix_lab',
       nombreActuacion: 'Contestación de Demanda Laboral en Juicio Ordinario', rolProcesal: 'Demandado (Empleador)',
       tipoInstitucion: 'Defensa Laboral de Fondo', articuloYNorma: 'Art. 452 y 453 Código del Trabajo',
       diasBase: 5, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
       elementosAConsiderar: ['Presentación escrita hasta 5 días antes de la fecha fijada para la audiencia preparatoria']
     ),
     ActuacionProcesal(
-      id: 'lab_ejecutivo_opose', materiaId: 'mix_lab_monitorio_ejec',
+      id: 'lab_ejecutivo_opose', materiaId: 'mix_lab',
       nombreActuacion: 'Oposición de Excepciones en Cobranza Laboral / Previsional', rolProcesal: 'Ejecutado (Empleador)',
       tipoInstitucion: 'Defensa Ejecutiva Laboral', articuloYNorma: 'Art. 463 y 464 Código del Trabajo',
       diasBase: 5, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
       elementosAConsiderar: ['Excepciones específicas en materia de cobranza laboral dentro de 5 días desde el requerimiento']
     ),
     ActuacionProcesal(
-      id: 'lab_reclamo_multa_dt', materiaId: 'mix_lab_monitorio_ejec',
+      id: 'lab_reconvencion', materiaId: 'mix_lab',
+      nombreActuacion: 'Reconvención del Empleador', rolProcesal: 'Demandado (Empleador)',
+      tipoInstitucion: 'Defensa y Reconvención Laboral', articuloYNorma: 'Art. 452 del Código del Trabajo',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Demandar de vuelta al trabajador en el mismo procedimiento por obligaciones contraídas y pendientes derivadas de la relación laboral (siempre que exista conexión directa)']
+    ),
+    ActuacionProcesal(
+      id: 'lab_reclamo_multa_dt', materiaId: 'mix_lab',
       nombreActuacion: 'Reclamación Judicial contra Multas de la Dirección del Trabajo', rolProcesal: 'Empresa / Empleador',
       tipoInstitucion: 'Contencioso Administrativo Laboral', articuloYNorma: 'Art. 503 Código del Trabajo',
       diasBase: 15, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
       elementosAConsiderar: ['15 días hábiles desde la notificación de la resolución o multa administrativa de la DT']
     ),
     ActuacionProcesal(
-      id: 'lab_recurso_nulidad', materiaId: 'mix_lab_despido',
+      id: 'lab_recurso_nulidad', materiaId: 'mix_lab',
       nombreActuacion: 'Recurso de Nulidad Laboral (Corte de Apelaciones)', rolProcesal: 'Parte Agraviada',
       tipoInstitucion: 'Recurso Laboral de Alzada', articuloYNorma: 'Art. 477 y 478 Código del Trabajo',
       diasBase: 10, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
       elementosAConsiderar: ['10 días hábiles laborales desde la notificación de la sentencia definitiva laboral']
     ),
     ActuacionProcesal(
-      id: 'lab_recurso_unificacion', materiaId: 'mix_lab_despido',
+      id: 'lab_recurso_unificacion', materiaId: 'mix_lab',
       nombreActuacion: 'Recurso de Unificación de Jurisprudencia (Corte Suprema)', rolProcesal: 'Parte Agraviada',
       tipoInstitucion: 'Recurso Laboral ante Corte Suprema', articuloYNorma: 'Art. 483 Código del Trabajo',
       diasBase: 15, tipoComputo: TipoComputoDias.habilesLaboral, admiteEmplazamiento: false,
       elementosAConsiderar: ['15 días hábiles laborales desde el fallo de nulidad que contenga interpretaciones contradictorias']
+    ),
+    ActuacionProcesal(
+      id: 'lab_recurso_queja', materiaId: 'mix_lab',
+      nombreActuacion: 'Recurso de Queja Laboral (Falta o Abuso Grave)', rolProcesal: 'Parte Agraviada',
+      tipoInstitucion: 'Recurso Disciplinario Extraordinario', articuloYNorma: 'Art. 545 del Código Orgánico de Tribunales (COT)',
+      diasBase: 5, tipoComputo: TipoComputoDias.habilesCivil, admiteEmplazamiento: false,
+      elementosAConsiderar: ['Recurso extraordinario interpuesto ante la Corte Suprema o Corte de Apelaciones respectiva cuando los jueces dictan resoluciones con falta o abuso grave']
     ),
 
     // ==========================================
