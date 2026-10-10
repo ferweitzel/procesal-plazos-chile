@@ -1187,30 +1187,9 @@ class FeriadosService {
   static bool apiOnline = false;
 
   static Future<void> inicializarFeriados() async {
-    try {
-      final response2026 = await http.get(Uri.parse('https://apis.digital.gob.cl/fl/feriados/2026')).timeout(const Duration(seconds: 5));
-      final response2027 = await http.get(Uri.parse('https://apis.digital.gob.cl/fl/feriados/2027')).timeout(const Duration(seconds: 5));
-
-      if (response2026.statusCode == 200) {
-        List<dynamic> data2026 = jsonDecode(response2026.body);
-        for (var item in data2026) {
-          feriadosDinamicos.add(DateTime.parse(item['fecha']));
-        }
-      }
-      if (response2027.statusCode == 200) {
-        List<dynamic> data2027 = jsonDecode(response2027.body);
-        for (var item in data2027) {
-          feriadosDinamicos.add(DateTime.parse(item['fecha']));
-        }
-      }
-      if (feriadosDinamicos.isNotEmpty) {
-        apiOnline = true;
-        return;
-      }
-    } catch (e) {
-      apiOnline = false;
-    }
+    feriadosDinamicos.clear();
     _cargarFeriadosFallback();
+    apiOnline = false;
   }
 
   static void _cargarFeriadosFallback() {
@@ -1450,13 +1429,16 @@ class _PlazosProcesalesScreenState extends State<PlazosProcesalesScreen> {
 
   Future<void> _initData() async {
     await FeriadosService.inicializarFeriados();
-    final historialCargado = await _historyRepo.getHistory();
+    List<CalculationRecord> historialCargado = [];
+    try {
+      historialCargado = await _historyRepo.getHistory();
+    } catch (_) {}
 
     setState(() {
-      _selectedMateria = LegalDatabase.materias.first;
+      _selectedMateria = LegalDatabase.materias.isNotEmpty ? LegalDatabase.materias.first : null;
       _updateActuacionesList();
       _tipoLetra = _determinarTipoLetraParaActuacion(_selectedActuacion);
-      _selectedTribunal = LegalDatabase.tribunales.first;
+      _selectedTribunal = LegalDatabase.tribunales.isNotEmpty ? LegalDatabase.tribunales.first : null;
       _historial = historialCargado;
       _cargandoFeriados = false;
     });
